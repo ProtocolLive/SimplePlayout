@@ -224,9 +224,10 @@ function Play(Objeto) {
   Objeto = Objeto.nextElementSibling
   while (Objeto !== null) {
     Objeto.cells[HORA].textContent = CalcularHorarios(
-      Objeto.previousSibling.cells[HORA].textContent,
+      Objeto.previousSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
       Objeto.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     )
+    Objeto.cells[HORA].innerHTML = Objeto.cells[HORA].innerHTML.replaceAll(' ', '<br>')
     Objeto.cells[TEMPOS].children[TemposAtual].textContent = '00:00:00'
     Objeto.cells[OK].textContent = ''
     Objeto = Objeto.nextElementSibling
