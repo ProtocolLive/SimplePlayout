@@ -214,7 +214,7 @@ function Play(Objeto) {
   }
   //Hora reproduzido
   temp = new Date
-  Objeto.cells[HORA].textContent = temp.toLocaleDateString() + ' ' + temp.toLocaleTimeString()
+  Objeto.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
   //Definir valor máximo no progress
   duracao = Objeto.cells[TEMPOS].children[TemposTotal].textContent.split(':')
   duracao = (duracao[0] * 3600) + (duracao[1] * 60) + parseInt(duracao[2])
