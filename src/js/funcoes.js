@@ -85,7 +85,7 @@ function EnableDrag(Item) {
 
     //video
     td = document.createElement('td')
-    td.classList = 'BorderFinBlack'
+    td.classList = Css
     temp = document.createElement('span')
     temp.textContent = DraggedItem.cells[0].textContent
     td.appendChild(temp)
