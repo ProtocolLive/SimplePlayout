@@ -1,5 +1,4 @@
 const Server = '192.168.0.102'
-//const Server = '127.0.0.1'
 
 const HORA = 0
 const VIDEO = 1
