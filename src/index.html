@@ -13,14 +13,14 @@
     <div>
       <a href="#" onclick="Ajax('cls.php?server='+Server,'Videos')">🔄️</a>
       <input type="text" onkeyup="FiltraVideos(this.value)">
-      <div id="Videos" style="max-height:95vh;overflow-y:scroll"></div>
+      <div id="Videos" style="max-height:95vh;overflow-y:auto"></div>
     </div>
     <div>
       <div>
         <progress id="Volume1" min="0" max="1499999999"></progress>
         <progress id="Volume2" min="0" max="1499999999"></progress>
       </div>
-      <div>
+      <div style="max-height:95vh;overflow-y:auto">
         <table>
           <thead>
             <tr>
