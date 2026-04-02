@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <link rel="stylesheet" href="https://estrategiagestao.com.br/public_css/bootstrap.css">
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="ajax.js"></script>
+  <title>Playout</title>
+</head>
+<body>
+  <div class="Flex">
+    <div>
+      <a href="#" onclick="Ajax('cls.php?server='+Server,'Videos')">🔄️</a>
+      <input type="text" onkeyup="FiltraVideos(this.value)">
+      <div id="Videos" style="max-height:95vh;overflow-y:scroll"></div>
+    </div>
+    <div>
+      <div>
+        <progress id="Volume1" min="0" max="1499999999"></progress>
+        <progress id="Volume2" min="0" max="1499999999"></progress>
+      </div>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th class="BorderFinBlack">Hora</th>
+              <th class="BorderFinBlack">Vídeo</th>
+              <th class="BorderFinBlack">Tempos</th>
+              <th class="BorderFinBlack">Opções</th>
+              <th class="BorderFinBlack">OK</th>
+            </tr>
+          </thead>
+          <tbody id="Playlist">
+            <tr id="Vazio">
+              <td class="BorderFinBlack TextCenter" colspan="6">VAZIO</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="funcoes.js"></script>
+</body>
+</html>

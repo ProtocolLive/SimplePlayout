@@ -1,0 +1,23 @@
+.Played{
+  background-color: #d4d4d4
+}
+
+.Selected{
+  background-color: #0f0
+}
+
+a{
+  text-decoration: none
+}
+
+a:hover{
+  text-decoration: underline
+}
+
+td,th{
+  padding: 5px
+}
+
+tr{
+  background-color: #fff
+}
