@@ -1,4 +1,6 @@
 <?php
+//Versão 2026.04.02.00
+
 ini_set('max_execution_time', '0');
 
 header('Content-Type: text/event-stream');
@@ -6,7 +8,7 @@ header('Access-Control-Allow-Origin: http://127.0.0.1');
 header('Cache-Control:no-cache');
 header('Connection:keep-alive');
 $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-$temp = socket_bind($sock, $_SERVER['SERVER_ADDR'], 6250);
+$temp = socket_bind($sock, '192.168.0.100', 6250);
 while(true):
   $size = socket_recvfrom($sock, $data, 65536, 0, $from, $port);
   //file_put_contents('a.txt', $data);
