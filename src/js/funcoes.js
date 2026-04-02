@@ -37,7 +37,7 @@ osc.onmessage = function (event) {
   tr.cells[TEMPOS].children[0].textContent = new Date(event[1] * 1000).toISOString().substr(11, 8)
   tr.cells[TEMPOS].children[TemposBarra].value = event[1]
   //play no proximo
-  if(tr.cells[TEMPOS].children[0].textContent === tr.cells[TEMPOS].children[2].textContent
+  if(tr.cells[TEMPOS].children[TemposAtual].textContent === tr.cells[TEMPOS].children[TemposTotal].textContent
   && tr.cells[OK].textContent === ''){
     tr.cells[OK].textContent = 'OK'
     if(tr.nextElementSibling !== null){
