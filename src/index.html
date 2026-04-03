@@ -32,7 +32,7 @@
             </tr>
           </thead>
           <tbody id="Playlist">
-            <tr id="Vazio">
+            <tr id="Vazio" ondragover="event.preventDefault();this.classList.add('Selected')" ondragleave="this.classList.remove('Selected')" ondrop="event.preventDefault();this.classList.remove('Selected');DragEnable(this)">
               <td class="BorderFinBlack TextCenter" colspan="6">VAZIO</td>
             </tr>
           </tbody>

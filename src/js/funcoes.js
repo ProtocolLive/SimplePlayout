@@ -16,10 +16,9 @@ const OpcoesTween = 3
 const OpcoesDirecao = 4
 const OpcoesLogo = 6
 
-let DraggedItem = null
+let DraggedVideo = null
 
 const osc = new EventSource('http://127.0.0.1:8080/osc.php')
-EnableDragInChildrens(document.getElementById('Playlist'))
 Ajax('cls.php?server=' + Server, 'Videos')
 
 osc.onmessage = function (event) {
@@ -36,10 +35,10 @@ osc.onmessage = function (event) {
   tr.cells[TEMPOS].children[0].textContent = new Date(event[1] * 1000).toISOString().substr(11, 8)
   tr.cells[TEMPOS].children[TemposBarra].value = event[1]
   //play no proximo
-  if(tr.cells[TEMPOS].children[TemposAtual].textContent === tr.cells[TEMPOS].children[TemposTotal].textContent
-  && tr.cells[OK].textContent === ''){
+  if (tr.cells[TEMPOS].children[TemposAtual].textContent === tr.cells[TEMPOS].children[TemposTotal].textContent
+    && tr.cells[OK].textContent === '') {
     tr.cells[OK].textContent = 'OK'
-    if(tr.nextElementSibling !== null){
+    if (tr.nextElementSibling !== null) {
       Play(tr.nextElementSibling)
     }
   }
@@ -59,134 +58,118 @@ function CalcularHorarios(Start, Segundos) {
   return Start.toLocaleDateString() + ' ' + Start.toLocaleTimeString()
 }
 
-function EnableDrag(Item) {
-  Item.addEventListener('dragover', function (e) {
-    e.preventDefault()
-    this.classList.add('Selected')
-  })
-  Item.addEventListener('dragleave', function () {
-    this.classList.remove('Selected')
-  })
-  Item.addEventListener('drop', function (e) {
-    const Css = 'BorderFinBlack TextCenter'
-    e.preventDefault()
-    if (DraggedItem === this) {
-      return
-    }
-    this.classList.remove('Selected')
-    tr = document.createElement('tr')
-    tr.id = DraggedItem.cells[0].textContent.replaceAll(' ', '')
-    EnableDrag(tr)
+function DragEnable(Objeto) {
+  const Css = 'BorderFinBlack TextCenter'
 
-    //hora
-    td = document.createElement('td')
-    td.classList = Css
-    tr.appendChild(td)
+  tr = document.createElement('tr')
+  tr.id = DraggedVideo.cells[0].textContent.replaceAll(' ', '')
+  tr.setAttribute('ondragover', "event.preventDefault();this.classList.add('Selected')")
+  tr.setAttribute('ondragleave', "this.classList.remove('Selected')")
+  tr.setAttribute('ondrop', "event.preventDefault();this.classList.remove('Selected');DragEnable(this)")
 
-    //video
-    td = document.createElement('td')
-    td.classList = Css
-    temp = document.createElement('span')
-    temp.textContent = DraggedItem.cells[0].textContent
-    td.appendChild(temp)
-    td.appendChild(document.createElement('br'))
-    temp = document.createElement('span')
-    temp.innerHTML = '<a href"#" onclick="Play(this.parentNode.parentNode.parentNode)" class="Pointer">▶️</a>'
-    temp.innerHTML += '<a href"#" onclick="Remover(this)" class="Pointer">❎</a>'
-    td.appendChild(temp)
-    tr.appendChild(td)
+  //hora
+  td = document.createElement('td')
+  td.classList = Css
+  tr.appendChild(td)
 
-    //tempos
-    td = document.createElement('td')
-    td.classList = Css
-    temp = document.createElement('span')
-    temp.textContent = '00:00:00'
-    td.appendChild(temp)
-    temp = document.createElement('span')
-    temp.textContent = ' / '
-    td.appendChild(temp)
-    temp = document.createElement('span')
-    if (DraggedItem.cells[1] === undefined) {
-      temp.textContent = 'NDI'
-    } else {
-      temp.textContent = DraggedItem.cells[1].textContent
-    }
-    td.appendChild(temp)
-    td.appendChild(document.createElement('br'))
-    td.appendChild(document.createElement('progress'))
-    tr.appendChild(td)
+  //video
+  td = document.createElement('td')
+  td.classList = Css
+  temp = document.createElement('span')
+  temp.textContent = DraggedVideo.cells[0].textContent
+  td.appendChild(temp)
+  td.appendChild(document.createElement('br'))
+  temp = document.createElement('span')
+  temp.innerHTML = '<a href"#" onclick="Play(this.parentNode.parentNode.parentNode)" class="Pointer">▶️</a>'
+  temp.innerHTML += '<a href"#" onclick="Remover(this)" class="Pointer">❎</a>'
+  td.appendChild(temp)
+  tr.appendChild(td)
 
-    //transição
-    td = document.createElement('td')
-    td.classList = Css
-    select = document.createElement('select')
-    temp = document.createElement('option')
-    temp.value = 'CUT'
-    temp.textContent = 'Corte'
-    select.appendChild(temp)
-    temp = document.createElement('option')
-    temp.value = 'MIX'
-    temp.textContent = 'Fade'
-    select.appendChild(temp)
-    temp = document.createElement('option')
-    temp.value = 'PUSH'
-    temp.textContent = 'Push'
-    select.appendChild(temp)
-    temp = document.createElement('option')
-    temp.value = 'SLIDE'
-    temp.textContent = 'Slide'
-    select.appendChild(temp)
-    temp = document.createElement('option')
-    temp.value = 'WIPE'
-    temp.textContent = 'Wipe'
-    select.appendChild(temp)
-    td.appendChild(select)
-    temp = document.createElement('input')
-    temp.type = 'number'
-    temp.value = 0
-    temp.style.width = '30px'
-    td.appendChild(temp)
-    td.appendChild(document.createElement('br'))
-    select = document.createElement('select')
-    temp = document.createElement('option')
-    temp.value = 'LINEAR'
-    temp.textContent = 'Linear'
-    select.appendChild(temp)
-    td.appendChild(select)
-    select = document.createElement('select')
-    temp = document.createElement('option')
-    temp.value = 'RIGHT'
-    temp.textContent = 'Direita'
-    select.appendChild(temp)
-    temp = document.createElement('option')
-    temp.value = 'LEFT'
-    temp.textContent = 'Esquerda'
-    select.appendChild(temp)
-    td.appendChild(select)
-    td.appendChild(document.createElement('br'))
-    temp = document.createElement('input')
-    temp.type = 'checkbox'
-    td.appendChild(temp)
-    temp = document.createElement('span')
-    temp.textContent = 'Logo'
-    td.appendChild(temp)
-    tr.appendChild(td)
+  //tempos
+  td = document.createElement('td')
+  td.classList = Css
+  temp = document.createElement('span')
+  temp.textContent = '00:00:00'
+  td.appendChild(temp)
+  temp = document.createElement('span')
+  temp.textContent = ' / '
+  td.appendChild(temp)
+  temp = document.createElement('span')
+  if (DraggedVideo.cells[1] === undefined) {
+    temp.textContent = 'NDI'
+  } else {
+    temp.textContent = DraggedVideo.cells[1].textContent
+  }
+  td.appendChild(temp)
+  td.appendChild(document.createElement('br'))
+  td.appendChild(document.createElement('progress'))
+  tr.appendChild(td)
 
-    td = document.createElement('td')
-    td.classList = Css
-    tr.appendChild(td)
+  //transição
+  td = document.createElement('td')
+  td.classList = Css
+  select = document.createElement('select')
+  temp = document.createElement('option')
+  temp.value = 'CUT'
+  temp.textContent = 'Corte'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'MIX'
+  temp.textContent = 'Fade'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'PUSH'
+  temp.textContent = 'Push'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'SLIDE'
+  temp.textContent = 'Slide'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'WIPE'
+  temp.textContent = 'Wipe'
+  select.appendChild(temp)
+  td.appendChild(select)
+  temp = document.createElement('input')
+  temp.type = 'number'
+  temp.value = 0
+  temp.style.width = '30px'
+  td.appendChild(temp)
+  td.appendChild(document.createElement('br'))
+  select = document.createElement('select')
+  temp = document.createElement('option')
+  temp.value = 'LINEAR'
+  temp.textContent = 'Linear'
+  select.appendChild(temp)
+  td.appendChild(select)
+  select = document.createElement('select')
+  temp = document.createElement('option')
+  temp.value = 'RIGHT'
+  temp.textContent = 'Direita'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'LEFT'
+  temp.textContent = 'Esquerda'
+  select.appendChild(temp)
+  td.appendChild(select)
+  td.appendChild(document.createElement('br'))
+  temp = document.createElement('input')
+  temp.type = 'checkbox'
+  td.appendChild(temp)
+  temp = document.createElement('span')
+  temp.textContent = 'Logo'
+  td.appendChild(temp)
+  tr.appendChild(td)
 
-    this.parentNode.insertBefore(tr, this.nextSibling)
-    if(document.getElementById('Vazio') !== null){
-      document.getElementById('Playlist').removeChild(document.getElementById('Vazio'))
-    }
-  })
-}
+  td = document.createElement('td')
+  td.classList = Css
+  tr.appendChild(td)
 
-function EnableDragInChildrens(Id) {
-  Id.querySelectorAll('tr').forEach(function (item) {
-    EnableDrag(item)
-  })
+  Objeto.parentNode.insertBefore(tr, Objeto.nextSibling)
+  if (document.getElementById('Vazio') !== null) {
+    document.getElementById('Playlist').removeChild(document.getElementById('Vazio'))
+  }
+  DraggedVideo = null
 }
 
 function FiltraVideos(Texto) {
@@ -234,9 +217,9 @@ function Play(Objeto) {
   }
 }
 
-function Remover(Objeto){
+function Remover(Objeto) {
   document.getElementById('Playlist').removeChild(Objeto.parentNode.parentNode.parentNode)
-  if(document.getElementById('Playlist').querySelectorAll('tr').length === 0){
+  if (document.getElementById('Playlist').querySelectorAll('tr').length === 0) {
     tr = document.createElement('tr')
     tr.id = 'Vazio'
     td = document.createElement('td')
@@ -244,7 +227,7 @@ function Remover(Objeto){
     td.textContent = 'VAZIO'
     td.setAttribute('colspan', 6)
     tr.appendChild(td)
-    EnableDrag(tr)
+    DragEnable(tr)
     document.getElementById('Playlist').appendChild(tr)
   }
 }

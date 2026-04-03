@@ -20,7 +20,7 @@ $response = explode("\r\n", $response);
 //var_dump($response);
 array_shift($response);?>
 <table>
-  <tr draggable="true" ondragstart="DraggedItem=this">
+  <tr draggable="true" ondragstart="DraggedVideo=this">
     <td colspan="2" class="TextCenter BorderFinBlack">ENTRADA NDI</td>
   </tr><?php
   foreach($response as &$item):
@@ -34,7 +34,7 @@ array_shift($response);?>
       if($item[1] !== 'MOVIE'):
         continue;
       endif;?>
-      <tr draggable="true" ondragstart="DraggedItem=this" onclick="this.classList.toggle('Selected')">
+      <tr draggable="true" ondragstart="DraggedVideo=this" onclick="this.classList.toggle('Selected')">
         <td class="BorderFinBlack"><?=$item[0]?></td><?php
         $item[5] = explode('/', $item[5]);
         $item[5] = $item[5][1] / $item[5][0];
