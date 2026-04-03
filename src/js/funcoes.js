@@ -222,6 +222,10 @@ function Play(Objeto) {
   duracao = Objeto.cells[TEMPOS].children[TemposTotal].textContent.split(':')
   duracao = (duracao[0] * 3600) + (duracao[1] * 60) + parseInt(duracao[2])
   Objeto.cells[TEMPOS].children[TemposBarra].setAttribute('max', duracao)
+  //Drag e classe
+  Objeto.classList.add('Played')
+  Objeto.removeAttribute('draggable')
+  Objeto.removeAttribute('ondragstart')
   //Hora dos próximos
   Objeto.cells[OK].textContent = ''
   Objeto = Objeto.nextElementSibling
