@@ -17,6 +17,7 @@ const OpcoesDirecao = 4
 const OpcoesLogo = 6
 
 let DraggedVideo = null
+let DraggedPlaylist = null
 
 const osc = new EventSource('http://127.0.0.1:8080/osc.php')
 Ajax('cls.php?server=' + Server, 'Videos')
@@ -62,7 +63,13 @@ function DragEnable(Objeto) {
   const Css = 'BorderFinBlack TextCenter'
 
   tr = document.createElement('tr')
-  tr.id = DraggedVideo.cells[0].textContent.replaceAll(' ', '')
+  if(DraggedVideo !== null){
+    tr.id = DraggedVideo.cells[0].textContent.replaceAll(' ', '')
+  }else{
+    tr.id = DraggedPlaylist.getAttribute('id')
+  }
+  tr.setAttribute('draggable', 'true')
+  tr.setAttribute('ondragstart', "DraggedPlaylist=this")
   tr.setAttribute('ondragover', "event.preventDefault();this.classList.add('Selected')")
   tr.setAttribute('ondragleave', "this.classList.remove('Selected')")
   tr.setAttribute('ondrop', "event.preventDefault();this.classList.remove('Selected');DragEnable(this)")
@@ -76,7 +83,11 @@ function DragEnable(Objeto) {
   td = document.createElement('td')
   td.classList = Css
   temp = document.createElement('span')
-  temp.textContent = DraggedVideo.cells[0].textContent
+  if(DraggedVideo !== null){
+    temp.textContent = DraggedVideo.cells[0].textContent
+  }else{
+    temp.textContent = DraggedPlaylist.cells[VIDEO].children[0].textContent
+  }
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))
   temp = document.createElement('span')
@@ -95,10 +106,14 @@ function DragEnable(Objeto) {
   temp.textContent = ' / '
   td.appendChild(temp)
   temp = document.createElement('span')
-  if (DraggedVideo.cells[1] === undefined) {
-    temp.textContent = 'NDI'
-  } else {
-    temp.textContent = DraggedVideo.cells[1].textContent
+  if(DraggedVideo !== null){
+    if (DraggedVideo.cells[1] === undefined) {
+      temp.textContent = 'NDI'
+    }else{
+      temp.textContent = DraggedVideo.cells[1].textContent
+    }
+  }else{
+    temp.textContent = DraggedPlaylist.cells[TEMPOS].children[TemposTotal].textContent
   }
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))
@@ -166,10 +181,15 @@ function DragEnable(Objeto) {
   tr.appendChild(td)
 
   Objeto.parentNode.insertBefore(tr, Objeto.nextSibling)
-  if (document.getElementById('Vazio') !== null) {
-    document.getElementById('Playlist').removeChild(document.getElementById('Vazio'))
+  if(DraggedVideo !== null){
+    if (document.getElementById('Vazio') !== null) {
+      document.getElementById('Playlist').removeChild(document.getElementById('Vazio'))
+    }
+  }else{
+    document.getElementById('Playlist').removeChild(Objeto.previousSibling)
   }
   DraggedVideo = null
+  DraggedPlaylist = null
 }
 
 function FiltraVideos(Texto) {
