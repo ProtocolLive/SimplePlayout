@@ -45,20 +45,6 @@ osc.onmessage = function (event) {
   }
 }
 
-function CalcularHorarios(Start, Segundos) {
-  if (Start === '') {
-    return
-  }
-  Start = Start.split('/')
-  Start = Start[1] + '/' + Start[0] + '/' + Start[2]
-  Start = new Date(Start)
-  Segundos = Segundos.split(':')
-  Start.setSeconds(Start.getSeconds() + parseInt(Segundos[2]))
-  Start.setMinutes(Start.getMinutes() + parseInt(Segundos[1]))
-  Start.setHours(Start.getHours() + parseInt(Segundos[0]))
-  return Start.toLocaleDateString() + ' ' + Start.toLocaleTimeString()
-}
-
 function DragEnable(Objeto) {
   const Css = 'BorderFinBlack TextCenter'
 
@@ -72,7 +58,7 @@ function DragEnable(Objeto) {
   tr.setAttribute('ondragstart', "DraggedPlaylist=this")
   tr.setAttribute('ondragover', "event.preventDefault();this.classList.add('Selected')")
   tr.setAttribute('ondragleave', "this.classList.remove('Selected')")
-  tr.setAttribute('ondrop', "event.preventDefault();this.classList.remove('Selected');DragEnable(this)")
+  tr.setAttribute('ondrop', "event.preventDefault();this.classList.remove('Selected');DragEnable(this);RecalcularTudo(this)")
 
   //hora
   td = document.createElement('td')
@@ -228,9 +214,13 @@ function Play(Objeto) {
   Objeto.removeAttribute('ondragstart')
   //Hora dos próximos
   Objeto.cells[OK].textContent = ''
+  RecalcularTudo(Objeto)
+}
+
+function RecalcularTudo(Objeto){
   Objeto = Objeto.nextElementSibling
   while (Objeto !== null) {
-    Objeto.cells[HORA].textContent = CalcularHorarios(
+    Objeto.cells[HORA].textContent = TempoSoma(
       Objeto.previousSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
       Objeto.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     )
@@ -254,4 +244,18 @@ function Remover(Objeto) {
     DragEnable(tr)
     document.getElementById('Playlist').appendChild(tr)
   }
+}
+
+function TempoSoma(Start, Segundos) {
+  if (Start === '') {
+    return
+  }
+  Start = Start.split('/')
+  Start = Start[1] + '/' + Start[0] + '/' + Start[2]
+  Start = new Date(Start)
+  Segundos = Segundos.split(':')
+  Start.setSeconds(Start.getSeconds() + parseInt(Segundos[2]))
+  Start.setMinutes(Start.getMinutes() + parseInt(Segundos[1]))
+  Start.setHours(Start.getHours() + parseInt(Segundos[0]))
+  return Start.toLocaleDateString() + ' ' + Start.toLocaleTimeString()
 }
