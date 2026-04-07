@@ -120,15 +120,15 @@ function DragEnable(Objeto) {
   select.appendChild(temp)
   temp = document.createElement('option')
   temp.value = 'PUSH'
-  temp.textContent = 'Push'
+  temp.textContent = 'Empurrar'
   select.appendChild(temp)
   temp = document.createElement('option')
   temp.value = 'SLIDE'
-  temp.textContent = 'Slide'
+  temp.textContent = 'Deslizar'
   select.appendChild(temp)
   temp = document.createElement('option')
   temp.value = 'WIPE'
-  temp.textContent = 'Wipe'
+  temp.textContent = 'Limpar'
   select.appendChild(temp)
   td.appendChild(select)
   temp = document.createElement('input')
@@ -141,6 +141,170 @@ function DragEnable(Objeto) {
   temp = document.createElement('option')
   temp.value = 'LINEAR'
   temp.textContent = 'Linear'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easynone'
+  temp.textContent = 'Easy none'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinquad'
+  temp.textContent = 'Easy In Quad'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutquad'
+  temp.textContent = 'Easy Out Quad'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutquad'
+  temp.textContent = 'Easy In Out Quad'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinquad'
+  temp.textContent = 'Easy Out In Quad'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyincubic'
+  temp.textContent = 'Easy In Cubic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutcubic'
+  temp.textContent = 'Easy Out Cubic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutcubic'
+  temp.textContent = 'Easy In Out Cubic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutincubic'
+  temp.textContent = 'Easy Out In Cubic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinquart'
+  temp.textContent = 'Easy In Quart'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutquart'
+  temp.textContent = 'Easy Out Quart'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutquart'
+  temp.textContent = 'Easy In Out Quart'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinquart'
+  temp.textContent = 'Easy Out In Quart'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinquint'
+  temp.textContent = 'Easy In Quint'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutquint'
+  temp.textContent = 'Easy Out Quint'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutquint'
+  temp.textContent = 'Easy In Out Quint'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinquint'
+  temp.textContent = 'Easy Out In Quint'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinsine'
+  temp.textContent = 'Easy In Sine'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutsine'
+  temp.textContent = 'Easy Out Sine'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutsine'
+  temp.textContent = 'Easy In Out Sine'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinsine'
+  temp.textContent = 'Easy Out In Sine'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinexpo'
+  temp.textContent = 'Easy In Expo'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutexpo'
+  temp.textContent = 'Easy Out Expo'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutexpo'
+  temp.textContent = 'Easy In Out Expo'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinexpo'
+  temp.textContent = 'Easy Out In Expo'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyincirc'
+  temp.textContent = 'Easy In Circ'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutcirc'
+  temp.textContent = 'Easy Out Circ'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutcirc'
+  temp.textContent = 'Easy In Out Circ'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutincirc'
+  temp.textContent = 'Easy Out In Circ'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinelastic'
+  temp.textContent = 'Easy In Elastic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutelastic'
+  temp.textContent = 'Easy Out Elastic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutelastic'
+  temp.textContent = 'Easy In Out Elastic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinelastic'
+  temp.textContent = 'Easy Out In Elastic'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinback'
+  temp.textContent = 'Easy In Back'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutbacl'
+  temp.textContent = 'Easy Out Back'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutbacl'
+  temp.textContent = 'Easy In Out Back'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinbacl'
+  temp.textContent = 'Easy Out In Back'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinbounce'
+  temp.textContent = 'Easy In Bounce'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutbounce'
+  temp.textContent = 'Easy Out Bounce'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyinoutbounce'
+  temp.textContent = 'Easy In Out Bounce'
+  select.appendChild(temp)
+  temp = document.createElement('option')
+  temp.value = 'easyoutinbounce'
+  temp.textContent = 'Easy Out In Bounce'
   select.appendChild(temp)
   td.appendChild(select)
   select = document.createElement('select')
