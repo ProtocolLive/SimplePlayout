@@ -18,6 +18,7 @@
     <div>
       <div>
         <a href="#" onclick="Ajax('config.php','AjaxConfig');document.getElementById('Window').showModal()">⚙️</a>
+        <input type="checkbox" onclick="Ajax('rtmp.php?server='+Server+'&status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
         <progress id="Volume1" min="0" max="1499999999"></progress>
         <progress id="Volume2" min="0" max="1499999999"></progress>
       </div>
