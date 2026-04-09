@@ -351,20 +351,16 @@ function FiltraVideos(Texto) {
 }
 
 function Play(Objeto) {
-  if (Objeto.cells[VIDEO].children[0].textContent === 'ENTRADA NDI') {
-    fetch('ndi.php?url=' + Server)
-  } else {
-    fetch(
-      'play.php?server=' + Server +
-      '&video=' + Objeto.cells[VIDEO].children[0].textContent +
-      '&transicao=' + Objeto.cells[OPCOES].children[OpcoesTransicao].value +
-      '&duracao=' + Objeto.cells[OPCOES].children[OpcoesTempo].value +
-      '&tween=' + Objeto.cells[OPCOES].children[OpcoesTween].value +
-      '&direcao=' + Objeto.cells[OPCOES].children[OpcoesDirecao].value +
-      '&logo=' + Objeto.cells[OPCOES].children[OpcoesLogo].checked +
-      '&live='
-    )
-  }
+  fetch(
+    'play.php?server=' + Server +
+    '&video=' + Objeto.cells[VIDEO].children[0].textContent +
+    '&transicao=' + Objeto.cells[OPCOES].children[OpcoesTransicao].value +
+    '&duracao=' + Objeto.cells[OPCOES].children[OpcoesTempo].value +
+    '&tween=' + Objeto.cells[OPCOES].children[OpcoesTween].value +
+    '&direcao=' + Objeto.cells[OPCOES].children[OpcoesDirecao].value +
+    '&logo=' + Objeto.cells[OPCOES].children[OpcoesLogo].checked +
+    '&live='
+  )
   //Hora reproduzido
   temp = new Date
   Objeto.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()

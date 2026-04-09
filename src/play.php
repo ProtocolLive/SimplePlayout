@@ -4,7 +4,13 @@ stream_set_timeout($fp, 1);
 if($fp === false):
   return;
 endif;
-fwrite($fp, 'PLAY 1-10 "' . $_GET['video'] . '" ' . $_GET['transicao'] . ' ' . $_GET['duracao'] . ' ' . $_GET['tween'] . ' ' . $_GET['direcao'] . "\r\n");
+if($_GET['video'] === 'ENTRADA NDI'):
+  $config = json_decode(file_get_contents('config.json'), true);
+  $video = 'ndi://' . $config['ndi'];
+else:
+  $video = $_GET['video'];
+endif;
+fwrite($fp, 'PLAY 1-10 "' . $video . '" ' . $_GET['transicao'] . ' ' . $_GET['duracao'] . ' ' . $_GET['tween'] . ' ' . $_GET['direcao'] . "\r\n");
 
 if($_GET['logo'] == 'true'):
   fwrite($fp, "MIXER 1-11 FILL 0.835938 0.0416667 0.117188 0.208333 0 Linear\r\n");
