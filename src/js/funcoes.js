@@ -351,7 +351,7 @@ function FiltraVideos(Texto) {
 }
 
 function Play(Objeto) {
-  if (Objeto.cells[1].textContent === 'ENTRADA NDI') {
+  if (Objeto.cells[VIDEO].children[0].textContent === 'ENTRADA NDI') {
     fetch('ndi.php?url=' + Server)
   } else {
     fetch(
