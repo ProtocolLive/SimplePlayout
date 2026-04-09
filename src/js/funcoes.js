@@ -346,6 +346,8 @@ function FiltraVideos(Texto) {
   document.getElementById('Videos').querySelectorAll('tr').forEach(function (tr) {
     if (tr.cells[0].textContent.toLowerCase().search(Texto.toLowerCase()) === -1) {
       tr.style.display = 'none'
+    }else{
+      tr.style.display = ''
     }
   })
 }
