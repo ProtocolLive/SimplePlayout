@@ -16,9 +16,9 @@ Para usá-lo, você precisa do [casparCG](https://www.casparcg.com) (2.5.0) e do
 Se você usar o servidor interno do PHP, você precisa criar 2 instâncias. Uma na porta de sua preferência (eu uso a 80) e outra na porta 8080.
 Isso é necessário porque o servidor interno é exclusivo pra desenvolvimento, e ele não aceita conexões simultâneas.
 
-Coloque o IP do servidor do casparCG na primeira linha do arquivo **funcoes.js**
+Acesse o site no seu navegador, endereço 127.0.0.1
 
-Coloque o IP do servidor web na linha 11 do arquivo **osc.php**
+Ao abrir o site pela primeira vez, coloque o IP do servidor nas configurações (engrenagem)
 
 No arquivo de configuração do casparCG (**casparcg.config**), coloque no final, antes de </configuration> o seguinte:
 ```xml

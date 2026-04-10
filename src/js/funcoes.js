@@ -1,5 +1,3 @@
-const Server = '192.168.0.102'
-
 const HORA = 0
 const VIDEO = 1
 const TEMPOS = 2
@@ -20,7 +18,7 @@ let DraggedVideo = null
 let DraggedPlaylist = null
 
 const osc = new EventSource('http://127.0.0.1:8080/osc.php')
-Ajax('cls.php?server=' + Server, 'Videos')
+Ajax('cls.php', 'Videos')
 
 osc.onmessage = function (event) {
   event = JSON.parse(event.data)
@@ -354,8 +352,7 @@ function FiltraVideos(Texto) {
 
 function Play(Objeto) {
   fetch(
-    'play.php?server=' + Server +
-    '&video=' + Objeto.cells[VIDEO].children[0].textContent +
+    'play.php?video=' + Objeto.cells[VIDEO].children[0].textContent +
     '&transicao=' + Objeto.cells[OPCOES].children[OpcoesTransicao].value +
     '&duracao=' + Objeto.cells[OPCOES].children[OpcoesTempo].value +
     '&tween=' + Objeto.cells[OPCOES].children[OpcoesTween].value +

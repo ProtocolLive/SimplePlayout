@@ -6,6 +6,7 @@ if($action === 'save'):
 else:
   $config = json_decode(file_get_contents('config.json'), true);
   $html = file_get_contents('config.htm');
+  $html = str_replace('**SERVER**', $config['server'] ?? '', $html);
   $html = str_replace('**NDI**', $config['ndi'] ?? '', $html);
   $html = str_replace('**RTMP**', $config['rtmp'] ?? '', $html);
   $html = str_replace('**RTMP_KEY**', $config['rtmp_key'] ?? '', $html);

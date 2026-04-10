@@ -1,5 +1,6 @@
 <?php
-$fp = fsockopen($_GET['server'], 5250, $errno, $errstr, 5);
+$config = json_decode(file_get_contents('config.json'), true);
+$fp = fsockopen($config['server'], 5250, $errno, $errstr, 5);
 stream_set_timeout($fp, 1);
 if($fp === false):
   echo 'Erro ao obter vídeos';
@@ -17,7 +18,6 @@ endwhile;
 fclose($fp);
 
 $response = explode("\r\n", $response);
-//var_dump($response);
 array_shift($response);?>
 <table>
   <tr draggable="true" ondragstart="DraggedVideo=this">
