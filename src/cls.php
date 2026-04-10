@@ -1,22 +1,8 @@
 <?php
-$config = json_decode(file_get_contents('config.json'), true);
-$fp = fsockopen($config['server'], 5250, $errno, $errstr, 5);
-stream_set_timeout($fp, 1);
-if($fp === false):
-  echo 'Erro ao obter vídeos';
-  return;
-endif;
-fwrite($fp, "CLS\r\n");
-$response = '';
-while(!feof($fp)):
-  $chunk = fread($fp, 4096);
-  if($chunk === false):
-    break;
-  endif;
-  $response .= $chunk;
-endwhile;
-fclose($fp);
 
+require('SendData.php');
+
+$response = SendData('CLS', false);
 $response = explode("\r\n", $response);
 array_shift($response);?>
 <table>
