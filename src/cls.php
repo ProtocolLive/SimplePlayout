@@ -3,7 +3,7 @@
 require('SendData.php');
 
 $response = SendData('CLS', false);
-if($response === null):
+if($response === false):
   echo 'Falha na conexão';
   return;
 endif;

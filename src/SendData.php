@@ -3,11 +3,11 @@
 function SendData(
   string $Data,
   bool $Log = true
-):string|null{
+):string|bool{
   $config = json_decode(file_get_contents('config.json'), true);
   $fp = fsockopen($config['server'], 5250, $errno, $errstr, 5);
   if($fp === false):
-    return null;
+    return false;
   endif;
   stream_set_timeout($fp, 1);
   fwrite($fp, $Data . "\r\n");
@@ -22,11 +22,9 @@ function SendData(
     endif;
     $response .= $chunk;
   endwhile;
-  if($Log):
-    file_put_contents('play.log', "\t" . $response, FILE_APPEND);
-  else:
+  if($Log === false):
     return $response;
   endif;
-  file_put_contents('play.log', PHP_EOL . $response, FILE_APPEND);
-  return null;
+  file_put_contents('logs/play.log', "\t" . $response, FILE_APPEND);
+  return true;
 }
