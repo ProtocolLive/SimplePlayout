@@ -3,6 +3,10 @@
 require('SendData.php');
 
 $response = SendData('CLS', false);
+if($response === null):
+  echo 'Falha na conexão';
+  return;
+endif;
 $response = explode("\r\n", $response);
 array_shift($response);?>
 <table>
