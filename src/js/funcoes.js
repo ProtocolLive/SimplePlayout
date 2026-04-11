@@ -2,7 +2,6 @@ const HORA = 0
 const VIDEO = 1
 const TEMPOS = 2
 const OPCOES = 3
-const OK = 4
 
 const TemposAtual = 0
 const TemposTotal = 2
@@ -35,8 +34,8 @@ osc.onmessage = function (event) {
   tr.cells[TEMPOS].children[TemposBarra].value = event[1]
   //play no proximo
   if (tr.cells[TEMPOS].children[TemposAtual].textContent === tr.cells[TEMPOS].children[TemposTotal].textContent
-    && tr.cells[OK].textContent === '') {
-    tr.cells[OK].textContent = 'OK'
+  && tr.getAttribute('played') === null) {
+    tr.setAttribute('played', true)
     if (tr.nextElementSibling !== null) {
       Play(tr.nextElementSibling)
     }
@@ -320,10 +319,7 @@ function CreateLine(Objeto) {
   td.appendChild(temp)
   tr.appendChild(td)
 
-  td = document.createElement('td')
-  td.classList = Css
   tr.appendChild(td)
-
   Objeto.parentNode.insertBefore(tr, Objeto.nextSibling)
   if (DraggedVideo !== null) {
     if (document.getElementById('Vazio') !== null) {
@@ -376,7 +372,7 @@ function Play(Objeto) {
   Objeto.removeAttribute('draggable')
   Objeto.removeAttribute('ondragstart')
   //Hora dos próximos
-  Objeto.cells[OK].textContent = ''
+  Objeto.removeAttribute('played')
   RecalcularTudo(Objeto)
 }
 
@@ -389,7 +385,7 @@ function RecalcularTudo(Objeto) {
     )
     Objeto.cells[HORA].innerHTML = Objeto.cells[HORA].innerHTML.replaceAll(' ', '<br>')
     Objeto.cells[TEMPOS].children[TemposAtual].textContent = '00:00:00'
-    Objeto.cells[OK].textContent = ''
+    Objeto.removeAttribute('played')
     Objeto = Objeto.nextElementSibling
   }
 }
