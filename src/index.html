@@ -12,7 +12,7 @@
   <div class="Flex">
     <div style="margin-right:10px">
       <div>
-        <a href="#" onclick="Ajax('config.php','AjaxConfig');document.getElementById('Window').showModal()">⚙️</a>
+        <a href="#" onclick="Ajax('config.php','AjaxWindow');document.getElementById('AjaxWindow').showModal()">⚙️</a>
         <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
         <progress id="Volume1" min="0" max="1499999999"></progress>
         <progress id="Volume2" min="0" max="1499999999"></progress>
@@ -42,15 +42,7 @@
     </div>
   </div>
 
-  <dialog id="Window">
-    <form name="Config" onsubmit="return false">
-      <span id="AjaxConfig"></span>
-      <p>
-        <button type="button" onclick="document.getElementById('Window').close()">Fechar</button>
-        <button type="button" onclick="Ajax('config.php?action=save','AjaxBlank','Config');document.getElementById('Window').close()">Salvar</button>
-      </p>
-    </form>
-  </dialog>
+  <dialog id="AjaxWindow"></dialog>
 
   <span id="AjaxBlank"></span>
 
