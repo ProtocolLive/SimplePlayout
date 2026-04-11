@@ -10,12 +10,7 @@
 </head>
 <body>
   <div class="Flex">
-    <div>
-      <a href="#" onclick="Ajax('cls.php','Videos')">🔄️</a>
-      <input type="text" onkeyup="FiltraVideos(this.value)">
-      <div id="Videos" style="max-height:95vh;overflow-y:auto"></div>
-    </div>
-    <div>
+    <div style="margin-right:10px">
       <div>
         <a href="#" onclick="Ajax('config.php','AjaxConfig');document.getElementById('Window').showModal()">⚙️</a>
         <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
@@ -40,6 +35,11 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <div>
+      <a href="#" onclick="Ajax('cls.php','Videos')">🔄️</a>
+      <input type="text" onkeyup="FiltraVideos(this.value)">
+      <div id="Videos" style="max-height:95vh;overflow-y:auto"></div>
     </div>
   </div>
 
