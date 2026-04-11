@@ -43,20 +43,16 @@ osc.onmessage = function (event) {
   }
 }
 
-function DragEnable(Objeto) {
+function CreateLine(Objeto) {
   const Css = 'BorderFinBlack TextCenter'
 
   tr = document.createElement('tr')
-  if(DraggedVideo !== null){
+  if (DraggedVideo !== null) {
     tr.id = DraggedVideo.cells[0].textContent.replaceAll(' ', '')
-  }else{
+  } else {
     tr.id = DraggedPlaylist.getAttribute('id')
   }
-  tr.setAttribute('draggable', 'true')
-  tr.setAttribute('ondragstart', "DraggedPlaylist=this")
-  tr.setAttribute('ondragover', "event.preventDefault();this.classList.add('Selected')")
-  tr.setAttribute('ondragleave', "this.classList.remove('Selected')")
-  tr.setAttribute('ondrop', "event.preventDefault();this.classList.remove('Selected');DragEnable(this);RecalcularTudo(this)")
+  DragEnable(tr)
 
   //hora
   td = document.createElement('td')
@@ -67,9 +63,9 @@ function DragEnable(Objeto) {
   td = document.createElement('td')
   td.classList = Css
   temp = document.createElement('span')
-  if(DraggedVideo !== null){
+  if (DraggedVideo !== null) {
     temp.textContent = DraggedVideo.cells[0].textContent
-  }else{
+  } else {
     temp.textContent = DraggedPlaylist.cells[VIDEO].children[0].textContent
   }
   td.appendChild(temp)
@@ -90,13 +86,13 @@ function DragEnable(Objeto) {
   temp.textContent = ' / '
   td.appendChild(temp)
   temp = document.createElement('span')
-  if(DraggedVideo !== null){
+  if (DraggedVideo !== null) {
     if (DraggedVideo.cells[1] === undefined) {
       temp.textContent = 'NDI'
-    }else{
+    } else {
       temp.textContent = DraggedVideo.cells[1].textContent
     }
-  }else{
+  } else {
     temp.textContent = DraggedPlaylist.cells[TEMPOS].children[TemposTotal].textContent
   }
   td.appendChild(temp)
@@ -329,22 +325,30 @@ function DragEnable(Objeto) {
   tr.appendChild(td)
 
   Objeto.parentNode.insertBefore(tr, Objeto.nextSibling)
-  if(DraggedVideo !== null){
+  if (DraggedVideo !== null) {
     if (document.getElementById('Vazio') !== null) {
       document.getElementById('Playlist').removeChild(document.getElementById('Vazio'))
     }
-  }else{
+  } else {
     document.getElementById('Playlist').removeChild(Objeto.previousSibling)
   }
   DraggedVideo = null
   DraggedPlaylist = null
 }
 
+function DragEnable(tr){
+  tr.setAttribute('draggable', 'true')
+  tr.setAttribute('ondragstart', "DraggedPlaylist=this")
+  tr.setAttribute('ondragover', "event.preventDefault();this.classList.add('Selected')")
+  tr.setAttribute('ondragleave', "this.classList.remove('Selected')")
+  tr.setAttribute('ondrop', "event.preventDefault();this.classList.remove('Selected');CreateLine(this);RecalcularTudo(this)")
+}
+
 function FiltraVideos(Texto) {
   document.getElementById('Videos').querySelectorAll('tr').forEach(function (tr) {
     if (tr.cells[0].textContent.toLowerCase().search(Texto.toLowerCase()) === -1) {
       tr.style.display = 'none'
-    }else{
+    } else {
       tr.style.display = ''
     }
   })
@@ -376,7 +380,7 @@ function Play(Objeto) {
   RecalcularTudo(Objeto)
 }
 
-function RecalcularTudo(Objeto){
+function RecalcularTudo(Objeto) {
   Objeto = Objeto.nextElementSibling
   while (Objeto !== null) {
     Objeto.cells[HORA].textContent = TempoSoma(
@@ -400,8 +404,8 @@ function Remover(Objeto) {
     td.textContent = 'VAZIO'
     td.setAttribute('colspan', 6)
     tr.appendChild(td)
-    DragEnable(tr)
     document.getElementById('Playlist').appendChild(tr)
+    DragEnable(tr)
   }
 }
 
