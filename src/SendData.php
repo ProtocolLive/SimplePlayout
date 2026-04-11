@@ -6,10 +6,10 @@ function SendData(
 ):string|null{
   $config = json_decode(file_get_contents('config.json'), true);
   $fp = fsockopen($config['server'], 5250, $errno, $errstr, 5);
-  stream_set_timeout($fp, 1);
   if($fp === false):
     return null;
   endif;
+  stream_set_timeout($fp, 1);
   fwrite($fp, $Data . "\r\n");
   if($Log):
     file_put_contents('logs/play.log', date('Y-m-d H:i:s') . "\t" . $Data, FILE_APPEND);
