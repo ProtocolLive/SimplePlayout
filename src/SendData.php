@@ -1,11 +1,12 @@
 <?php
+//2026.04.12.00
 
 function SendData(
   string $Data,
   bool $Log = true
 ):string|bool{
   $config = json_decode(file_get_contents('config.json'), true);
-  $fp = fsockopen($config['server'], 5250, $errno, $errstr, 5);
+  static $fp = fsockopen($config['server'], 5250, $errno, $errstr, 5);
   if($fp === false):
     return false;
   endif;
