@@ -12,6 +12,7 @@ const OpcoesTempo = 1
 const OpcoesTween = 3
 const OpcoesDirecao = 4
 const OpcoesLogo = 6
+const OpcoesLive = 8
 
 let DraggedVideo = null
 let DraggedPlaylist = null
@@ -323,6 +324,12 @@ function CreateLine(Objeto) {
   temp = document.createElement('span')
   temp.textContent = 'Logo'
   td.appendChild(temp)
+  temp = document.createElement('input')
+  temp.type = 'checkbox'
+  td.appendChild(temp)
+  temp = document.createElement('span')
+  temp.textContent = 'Live'
+  td.appendChild(temp)
   tr.appendChild(td)
 
   tr.appendChild(td)
@@ -364,7 +371,7 @@ function Play(Objeto) {
     '&tween=' + Objeto.cells[OPCOES].children[OpcoesTween].value +
     '&direcao=' + Objeto.cells[OPCOES].children[OpcoesDirecao].value +
     '&logo=' + Objeto.cells[OPCOES].children[OpcoesLogo].checked +
-    '&live='
+    '&live=' + Objeto.cells[OPCOES].children[OpcoesLive].checked
   )
   //Hora reproduzido
   temp = new Date
