@@ -3,8 +3,8 @@ const VIDEO = 1
 const TEMPOS = 2
 const OPCOES = 3
 
-const TemposAtual = 0
-const TemposTotal = 2
+const TemposTotal = 0
+const TemposRestante = 2
 const TemposBarra = 4
 
 const OpcoesTransicao = 0
@@ -28,11 +28,14 @@ osc.onmessage = function (event) {
   if (tr === null) {
     return
   }
-  event[1] = Math.floor(event[1])
-  tr.cells[TEMPOS].children[0].textContent = new Date(event[1] * 1000).toISOString().substr(11, 8)
+  decorrido = new Date('1970-1-1')
+  decorrido.setMilliseconds(Math.floor(event[1]) * 1000)
+  restante = new Date('1970-1-1 ' + tr.cells[TEMPOS].children[TemposTotal].textContent)
+  restante = new Date(restante - decorrido)
+  tr.cells[TEMPOS].children[TemposRestante].textContent = restante.toISOString().substr(11, 8)
   tr.cells[TEMPOS].children[TemposBarra].value = event[1]
   //play no proximo
-  if (tr.cells[TEMPOS].children[TemposAtual].textContent === tr.cells[TEMPOS].children[TemposTotal].textContent
+  if (tr.cells[TEMPOS].children[TemposRestante].textContent === '00:00:00'
   && tr.getAttribute('played') === null) {
     tr.setAttribute('played', true)
     if (tr.nextElementSibling !== null) {
@@ -78,16 +81,20 @@ function CreateLine(Objeto) {
   td = document.createElement('td')
   td.classList = Css
   temp = document.createElement('span')
-  temp.textContent = '00:00:00'
+  if (DraggedVideo !== null) {
+    if (DraggedVideo.cells[1] !== undefined) {
+      temp.textContent = DraggedVideo.cells[1].textContent
+    }
+  } else {
+    temp.textContent = DraggedPlaylist.cells[TEMPOS].children[TemposTotal].textContent
+  }
   td.appendChild(temp)
   temp = document.createElement('span')
   temp.textContent = ' / '
   td.appendChild(temp)
   temp = document.createElement('span')
   if (DraggedVideo !== null) {
-    if (DraggedVideo.cells[1] === undefined) {
-      temp.textContent = 'NDI'
-    } else {
+    if (DraggedVideo.cells[1] !== undefined) {
       temp.textContent = DraggedVideo.cells[1].textContent
     }
   } else {
@@ -383,7 +390,7 @@ function RecalcularTudo(Objeto) {
       Objeto.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     )
     Objeto.cells[HORA].innerHTML = Objeto.cells[HORA].innerHTML.replaceAll(' ', '<br>')
-    Objeto.cells[TEMPOS].children[TemposAtual].textContent = '00:00:00'
+    Objeto.cells[TEMPOS].children[TemposRestante].textContent = Objeto.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     Objeto.removeAttribute('played')
     Objeto = Objeto.nextElementSibling
   }
