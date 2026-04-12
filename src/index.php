@@ -47,5 +47,8 @@
   <span id="AjaxBlank"></span>
 
   <script src="js/funcoes.js"></script>
+  <script>
+    const osc = new EventSource('http://<?=gethostbyname(gethostname())?>:8080/osc.php')
+  </script>
 </body>
 </html>

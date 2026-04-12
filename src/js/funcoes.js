@@ -16,7 +16,6 @@ const OpcoesLogo = 6
 let DraggedVideo = null
 let DraggedPlaylist = null
 
-const osc = new EventSource('http://127.0.0.1:8080/osc.php')
 Ajax('cls.php', 'Videos')
 
 osc.onmessage = function (event) {
