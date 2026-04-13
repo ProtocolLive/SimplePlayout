@@ -399,6 +399,7 @@ function RecalcularTudo(Objeto) {
     Objeto.cells[HORA].innerHTML = Objeto.cells[HORA].innerHTML.replaceAll(' ', '<br>')
     Objeto.cells[TEMPOS].children[TemposRestante].textContent = Objeto.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     Objeto.removeAttribute('played')
+    Objeto.classList.remove('Played')
     Objeto = Objeto.nextElementSibling
   }
 }
