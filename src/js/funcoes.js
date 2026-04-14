@@ -17,6 +17,8 @@ const OpcoesLive = 8
 let DraggedVideo = null
 let DraggedPlaylist = null
 
+let TempoNdi = []
+
 Ajax('cls.php', 'Videos')
 
 osc.onmessage = function (event) {
@@ -82,7 +84,9 @@ function CreateLine(Objeto) {
   td.classList = Css
   temp = document.createElement('span')
   if (DraggedVideo !== null) {
-    if (DraggedVideo.cells[1] !== undefined) {
+    if (DraggedVideo.cells[1] === undefined) {//ndi
+      temp.textContent = '00:00:00'
+    }else{
       temp.textContent = DraggedVideo.cells[1].textContent
     }
   } else {
@@ -381,13 +385,16 @@ function Play(tr) {
   tr.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
   //Drag e classe
   tr.classList.add('Played')
-  tr.removeAttribute('draggable')
-  tr.removeAttribute('ondragstart')
-  tr.removeAttribute('ondragover')
-  tr.removeAttribute('ondragleave')
-  tr.removeAttribute('ondrop')
   //Hora dos próximos
-  if(tr.cells[VIDEO].children[0].textContent !== 'ENTRADA NDI'){
+  clearInterval(TempoNdi[2])
+  if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
+    TempoNdi[0] = tr
+    TempoNdi[1] = new Date('1970-1-1')
+    TempoNdi[2] = setInterval(function(){
+      TempoNdi[1].setSeconds(TempoNdi[1].getSeconds() + 1)
+      TempoNdi[0].cells[TEMPOS].children[TemposTotal].textContent = TempoNdi[1].toLocaleTimeString()
+    },1000)
+  }else{
     RecalcularTudo(tr)
   }
 }
