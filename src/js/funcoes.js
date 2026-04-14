@@ -384,8 +384,8 @@ function Play(Objeto) {
   Objeto.classList.add('Played')
   Objeto.removeAttribute('draggable')
   Objeto.removeAttribute('ondragstart')
-  //Hora dos próximos
   Objeto.removeAttribute('played')
+  //Hora dos próximos
   RecalcularTudo(Objeto)
 }
 
