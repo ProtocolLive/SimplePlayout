@@ -389,19 +389,19 @@ function Play(Objeto) {
   RecalcularTudo(Objeto)
 }
 
-function RecalcularTudo(Objeto) {
-  Objeto = Objeto.nextElementSibling
-  while (Objeto !== null) {
-    Objeto.cells[HORA].textContent = TempoSoma(
-      Objeto.previousSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
-      Objeto.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
+function RecalcularTudo(tr) {
+  tr = tr.nextElementSibling
+  while (tr !== null) {
+    tr.cells[HORA].textContent = TempoSoma(
+      tr.previousSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
+      tr.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     )
-    Objeto.cells[HORA].innerHTML = Objeto.cells[HORA].innerHTML.replaceAll(' ', '<br>')
-    Objeto.cells[TEMPOS].children[TemposRestante].textContent = Objeto.cells[TEMPOS].children[TemposTotal].textContent
-    Objeto.cells[TEMPOS].children[TemposBarra].value = 0
-    Objeto.removeAttribute('played')
-    Objeto.classList.remove('Played')
-    Objeto = Objeto.nextElementSibling
+    tr.cells[HORA].innerHTML = tr.cells[HORA].innerHTML.replaceAll(' ', '<br>')
+    tr.cells[TEMPOS].children[TemposRestante].textContent = tr.cells[TEMPOS].children[TemposTotal].textContent
+    tr.cells[TEMPOS].children[TemposBarra].value = 0
+    tr.removeAttribute('played')
+    tr.classList.remove('Played')
+    tr = tr.nextElementSibling
   }
 }
 
