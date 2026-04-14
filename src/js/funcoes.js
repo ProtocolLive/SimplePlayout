@@ -37,8 +37,7 @@ osc.onmessage = function (event) {
   tr.cells[TEMPOS].children[TemposBarra].value = event[1]
   //play no proximo
   if (tr.cells[TEMPOS].children[TemposRestante].textContent === '00:00:00'
-  && tr.getAttribute('played') === null) {
-    tr.setAttribute('played', true)
+  && tr.nextSibling.classList.contains('Played') === false) {
     if (tr.nextElementSibling !== null) {
       Play(tr.nextElementSibling)
     }
@@ -93,17 +92,21 @@ function CreateLine(Objeto) {
   temp = document.createElement('span')
   temp.textContent = ' / '
   td.appendChild(temp)
-  temp = document.createElement('span')
+  duracao = document.createElement('span')
   if (DraggedVideo !== null) {
     if (DraggedVideo.cells[1] !== undefined) {
-      temp.textContent = DraggedVideo.cells[1].textContent
+      duracao.textContent = DraggedVideo.cells[1].textContent
     }
   } else {
-    temp.textContent = DraggedPlaylist.cells[TEMPOS].children[TemposTotal].textContent
+    duracao.textContent = DraggedPlaylist.cells[TEMPOS].children[TemposTotal].textContent
   }
-  td.appendChild(temp)
+  td.appendChild(duracao)
   td.appendChild(document.createElement('br'))
-  td.appendChild(document.createElement('progress'))
+  temp = document.createElement('progress')
+  duracao = duracao.textContent.split(':')
+  duracao = (duracao[0] * 3600) + (duracao[1] * 60) + parseInt(duracao[2])
+  temp.setAttribute('max', duracao)
+  td.appendChild(temp)
   tr.appendChild(td)
 
   //transição
@@ -363,30 +366,30 @@ function FiltraVideos(Texto) {
   })
 }
 
-function Play(Objeto) {
+function Play(tr) {
   fetch(
-    'play.php?video=' + Objeto.cells[VIDEO].children[0].textContent +
-    '&transicao=' + Objeto.cells[OPCOES].children[OpcoesTransicao].value +
-    '&duracao=' + Objeto.cells[OPCOES].children[OpcoesTempo].value +
-    '&tween=' + Objeto.cells[OPCOES].children[OpcoesTween].value +
-    '&direcao=' + Objeto.cells[OPCOES].children[OpcoesDirecao].value +
-    '&logo=' + Objeto.cells[OPCOES].children[OpcoesLogo].checked +
-    '&live=' + Objeto.cells[OPCOES].children[OpcoesLive].checked
+    'play.php?video=' + tr.cells[VIDEO].children[0].textContent +
+    '&transicao=' + tr.cells[OPCOES].children[OpcoesTransicao].value +
+    '&duracao=' + tr.cells[OPCOES].children[OpcoesTempo].value +
+    '&tween=' + tr.cells[OPCOES].children[OpcoesTween].value +
+    '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value +
+    '&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
+    '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
   )
   //Hora reproduzido
   temp = new Date
-  Objeto.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
-  //Definir valor máximo no progress
-  duracao = Objeto.cells[TEMPOS].children[TemposTotal].textContent.split(':')
-  duracao = (duracao[0] * 3600) + (duracao[1] * 60) + parseInt(duracao[2])
-  Objeto.cells[TEMPOS].children[TemposBarra].setAttribute('max', duracao)
+  tr.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
   //Drag e classe
-  Objeto.classList.add('Played')
-  Objeto.removeAttribute('draggable')
-  Objeto.removeAttribute('ondragstart')
-  Objeto.removeAttribute('played')
+  tr.classList.add('Played')
+  tr.removeAttribute('draggable')
+  tr.removeAttribute('ondragstart')
+  tr.removeAttribute('ondragover')
+  tr.removeAttribute('ondragleave')
+  tr.removeAttribute('ondrop')
   //Hora dos próximos
-  RecalcularTudo(Objeto)
+  if(tr.cells[VIDEO].children[0].textContent !== 'ENTRADA NDI'){
+    RecalcularTudo(tr)
+  }
 }
 
 function RecalcularTudo(tr) {
@@ -397,10 +400,12 @@ function RecalcularTudo(tr) {
       tr.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     )
     tr.cells[HORA].innerHTML = tr.cells[HORA].innerHTML.replaceAll(' ', '<br>')
+    if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
+      break
+    }
     tr.cells[TEMPOS].children[TemposRestante].textContent = tr.cells[TEMPOS].children[TemposTotal].textContent
-    tr.cells[TEMPOS].children[TemposBarra].value = 0
-    tr.removeAttribute('played')
     tr.classList.remove('Played')
+
     tr = tr.nextElementSibling
   }
 }
