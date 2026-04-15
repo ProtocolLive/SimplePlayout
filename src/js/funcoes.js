@@ -20,6 +20,7 @@ let DraggedPlaylist = null
 let TempoNdi = []
 
 Ajax('cls.php', 'Videos')
+Ajax('ConfigServer.php', 'AjaxBlank')
 
 osc.onmessage = function (event) {
   event = JSON.parse(event.data)
@@ -32,17 +33,24 @@ osc.onmessage = function (event) {
     return
   }
   decorrido = new Date('1970-1-1')
-  decorrido.setMilliseconds(Math.floor(event[1]) * 1000)
+  decorrido.setSeconds(Math.floor(event[1]))
   restante = new Date('1970-1-1 ' + tr.cells[TEMPOS].children[TemposTotal].textContent)
   restante = new Date(restante - decorrido)
   tr.cells[TEMPOS].children[TemposRestante].textContent = restante.toISOString().substr(11, 8)
   tr.cells[TEMPOS].children[TemposBarra].value = event[1]
+  //carregar o proximo
+  if(tr.cells[TEMPOS].children[TemposRestante].textContent === '00:00:05'
+  && tr.nextElementSibling !== null
+  && tr.nextElementSibling.getAttribute('preload') === null){
+    Preload(tr.nextElementSibling)
+    return
+  }
   //play no proximo
   if (tr.cells[TEMPOS].children[TemposRestante].textContent === '00:00:00'
-  && tr.nextSibling.classList.contains('Played') === false) {
-    if (tr.nextElementSibling !== null) {
-      Play(tr.nextElementSibling)
-    }
+  && tr.classList.contains('Played') === true
+  && tr.nextElementSibling !== null
+  && tr.nextElementSibling.classList.contains('Played') === false) {
+    Play(tr.nextElementSibling)
   }
 }
 
@@ -371,19 +379,15 @@ function FiltraVideos(Texto) {
 }
 
 function Play(tr) {
+  if(tr.getAttribute('preload') === null){
+    Preload(tr)
+  }
   fetch(
-    'play.php?video=' + tr.cells[VIDEO].children[0].textContent +
-    '&transicao=' + tr.cells[OPCOES].children[OpcoesTransicao].value +
-    '&duracao=' + tr.cells[OPCOES].children[OpcoesTempo].value +
-    '&tween=' + tr.cells[OPCOES].children[OpcoesTween].value +
-    '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value +
-    '&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
+    'play.php?action=play&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
     '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
   )
-  //Hora reproduzido
   temp = new Date
   tr.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
-  //Drag e classe
   tr.classList.add('Played')
   //Hora dos próximos
   clearInterval(TempoNdi[2])
@@ -399,19 +403,34 @@ function Play(tr) {
   }
 }
 
+function Preload(tr){
+  fetch(
+    'play.php?action=load&video=' + tr.cells[VIDEO].children[0].textContent +
+    '&transicao=' + tr.cells[OPCOES].children[OpcoesTransicao].value +
+    '&duracao=' + tr.cells[OPCOES].children[OpcoesTempo].value +
+    '&tween=' + tr.cells[OPCOES].children[OpcoesTween].value +
+    '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value
+  )
+  tr.setAttribute('preload', true)
+}
+
 function RecalcularTudo(tr) {
   tr = tr.nextElementSibling
   while (tr !== null) {
-    tr.cells[HORA].textContent = TempoSoma(
-      tr.previousSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
-      tr.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
-    )
+    if(tr.previousSibling.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
+      tr.cells[HORA].textContent = ''
+    }else{
+      tr.cells[HORA].textContent = TempoSoma(
+        tr.previousSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
+        tr.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
+      )
+    }
+    if(tr.cells[VIDEO].children[0].textContent !== 'ENTRADA NDI'){
+      tr.cells[TEMPOS].children[TemposRestante].textContent = tr.cells[TEMPOS].children[TemposTotal].textContent
+    }
     tr.cells[HORA].innerHTML = tr.cells[HORA].innerHTML.replaceAll(' ', '<br>')
     tr.classList.remove('Played')
-    if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
-      break
-    }
-    tr.cells[TEMPOS].children[TemposRestante].textContent = tr.cells[TEMPOS].children[TemposTotal].textContent
+    tr.removeAttribute('preload')
     tr = tr.nextElementSibling
   }
 }

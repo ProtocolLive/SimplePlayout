@@ -13,7 +13,7 @@
     <div style="margin-right:10px">
       <div>
         <a href="#" onclick="Ajax('config.php','AjaxWindow');document.getElementById('AjaxWindow').showModal()">⚙️</a>
-        <input type="checkbox" onclick="Ajax('play.php?gc='+this.checked,'AjaxBlank')"> NDI GC &nbsp;
+        <input type="checkbox" onclick="Ajax('play.php?action=gc&status='+this.checked,'AjaxBlank')"> GC &nbsp;
         <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
         <progress id="Volume1" min="0" max="1499999999"></progress>
         <progress id="Volume2" min="0" max="1499999999"></progress>

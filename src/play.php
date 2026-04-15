@@ -1,43 +1,32 @@
 <?php
 require('SendData.php');
-
 $config = json_decode(file_get_contents('config.json'), true);
-if(isset($_GET['video'])):
+
+if($_GET['action'] === 'load'):
   if($_GET['video'] === 'ENTRADA NDI'):
-    $video = 'ndi://' . $config['ndi'];
+    $data = 'ndi://' . $config['ndi'] ;
   else:
-    $video = $_GET['video'];
+    $data = $_GET['video'];
   endif;
-  $data = 'PLAY 1-10 "' . $video . '" ' . $_GET['transicao'] . ' ' . $_GET['duracao'] . ' ' . $_GET['tween'] . ' ' . $_GET['direcao'];
-endif;
-
-if(isset($_GET['gc'])):
-  if($_GET['gc'] === 'true'):
-    $data = 'PLAY 1-11 "ndi://' . $config['ndi2'] . '"' . "\r\n";
-    $data .= 'MIXER 1-11 CHROMA Green 0.34 0.44 1';
-  else:
-    $data = 'STOP 1-11';
-  endif;
-endif;
-
-if(isset($_GET['logo'])):
+  SendData('LOADBG 1-10 "' . $data. '" ' . $_GET['transicao'] . ' ' . $_GET['duracao'] . ' ' . $_GET['tween'] . ' ' . $_GET['direcao']);
+elseif($_GET['action'] === 'play'):
+  $data = 'PLAY 1-10' . "\r\n";
   if($_GET['logo'] == 'true'):
-    $data .= "\r\n" . 'MIXER 1-20 FILL 0.867188 0.0430556 0.08125 0.140278 0 Linear' . "\r\n";
-    $data .= 'MIXER 1-20 CHROMA Green 0.34 0.44 1' . "\r\n";
-    $data .= 'PLAY 1-20 "LOGO" MIX 30';
+    $data .= 'PLAY 1-20 "LOGO" MIX 30' . "\r\n";
   else:
-    $data .= "\r\n" . 'STOP 1-20';
+    $data .= 'STOP 1-20' . "\r\n";
   endif;
-endif;
-
-if(isset($_GET['live'])):
   if($_GET['live'] == 'true'):
-    $data .= "\r\n" . 'MIXER 1-21 FILL 0.878906 0.1222222 0.0570313 0.102778 0 Linear' . "\r\n";
-    $data .= 'MIXER 1-21 CHROMA Green 0.34 0.44 1' . "\r\n";
     $data .= 'PLAY 1-21 "AO VIVO" MIX 30';
   else:
-    $data .= "\r\n" . 'STOP 1-21';
+    $data .= 'STOP 1-21';
   endif;
+  SendData($data);
+elseif($_GET['action'] === 'gc'):
+  if($_GET['status'] === 'true'):
+    SendData('PLAY 1-15 "ndi://' . $config['ndi2'] . '"');
+  else:
+    SendData('STOP 1-15');
+  endif;
+  return;
 endif;
-
-SendData($data);
