@@ -407,12 +407,11 @@ function RecalcularTudo(tr) {
       tr.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
     )
     tr.cells[HORA].innerHTML = tr.cells[HORA].innerHTML.replaceAll(' ', '<br>')
+    tr.classList.remove('Played')
     if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
       break
     }
     tr.cells[TEMPOS].children[TemposRestante].textContent = tr.cells[TEMPOS].children[TemposTotal].textContent
-    tr.classList.remove('Played')
-
     tr = tr.nextElementSibling
   }
 }
