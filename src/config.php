@@ -4,6 +4,7 @@ $action = $_GET['action'] ?? 'get';
 if($action === 'save'):
   $_POST = array_map(trim(...), $_POST);
   file_put_contents('config.json', json_encode($_POST));
+  require('ConfigServer.php');
 else:
   $config = json_decode(file_get_contents('config.json'), true);
   $html = file_get_contents('config.htm');
