@@ -83,7 +83,7 @@ function CreateLine(Objeto) {
   td.appendChild(document.createElement('br'))
   temp = document.createElement('span')
   temp.innerHTML = '<a href"#" onclick="Play(this.parentNode.parentNode.parentNode)" class="Pointer">▶️</a>'
-  temp.innerHTML += '<a href"#" onclick="Remover(this)" class="Pointer">❎</a>'
+  temp.innerHTML += '<a href"#" onclick="Remover(this.parentElement.parentElement.parentElement)" class="Pointer">❎</a>'
   td.appendChild(temp)
   tr.appendChild(td)
 
@@ -351,10 +351,10 @@ function CreateLine(Objeto) {
   Objeto.parentNode.insertBefore(tr, Objeto.nextSibling)
   if (DraggedVideo !== null) {
     if (document.getElementById('Vazio') !== null) {
-      document.getElementById('Playlist').removeChild(document.getElementById('Vazio'))
+      document.getElementById('Vazio').remove()
     }
   } else {
-    document.getElementById('Playlist').removeChild(Objeto.previousSibling)
+    Objeto.previousSibling.remove()
   }
   DraggedVideo = null
   DraggedPlaylist = null
@@ -435,8 +435,8 @@ function RecalcularTudo(tr) {
   }
 }
 
-function Remover(Objeto) {
-  document.getElementById('Playlist').removeChild(Objeto.parentNode.parentNode.parentNode)
+function Remover(tr) {
+  tr.remove()
   if (document.getElementById('Playlist').querySelectorAll('tr').length === 0) {
     tr = document.createElement('tr')
     tr.id = 'Vazio'
