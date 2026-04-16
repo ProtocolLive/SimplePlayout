@@ -13,35 +13,33 @@ while(true):
   $size = socket_recvfrom($sock, $data, 65536, 0, $from, $port);
   //file_put_contents('a.txt', $data);
 
-  $comando = '/channel/1/stage/layer/10/foreground/file/name';
-  $pos = strpos($data, $comando);
+  echo "event: message\n";
+  echo 'data: ["';
+  $pos = strpos($data, '/channel/1/stage/layer/10/foreground/file/name');
   if($pos !== false):
-    $arquivo = substr($data, $pos + strlen($comando) + 6);
-    $arquivo = substr($arquivo, 0, strpos($arquivo, "\0"));
+    $start = $pos + 46 + 6;
+    $end = strpos($data, "\0", $start);
+    echo substr($data, $start, $end - $start);
   endif;
+  echo '",';
 
-  $comando = '/channel/1/stage/layer/10/foreground/file/time';
-  $pos = strpos($data, $comando);
+  $pos = strpos($data, '/channel/1/stage/layer/10/foreground/file/time');
   if($pos !== false):
-    $tempo = substr($data, $pos + strlen($comando));
+    $tempo = substr($data, $pos + 46);
     $tempo = trim($tempo, "\0");
     $tempo = substr($tempo, 0, 8);
     $tempo = unpack('G2', $tempo);
+    echo $tempo[2];
   endif;
+  echo ',';
 
-  $comando = '/channel/1/mixer/audio/volume';
-  $pos = strpos($data, $comando);
-  $typePos = strpos($data, ',iiiiiiiiiiiiiiii', $pos);
-  $dataOffset = $typePos + strlen(',iiiiiiiiiiiiiiii') + 1;
-  $dataOffset += (4 - ($dataOffset % 4)) % 4;
-  $som = unpack('N16', substr($data, $dataOffset, 64));
+  $pos = strpos($data, '/channel/1/mixer/audio/volume');
+  $pos = strpos($data, ',iiiiiiiiiiiiiiii', $pos);
+  $offset = $pos + 17 + 1;
+  $offset += (4 - ($offset % 4)) % 4;
+  $som = unpack('N16', substr($data, $offset, 64));
+  echo $som[1] . ',' . $som[2];
 
-  echo "event: message\n";
-  echo 'data: [';
-  echo '"' . ($arquivo ?? '') . '",';
-  echo ($tempo[2] ?? 0) . ',';
-  echo ($som[1] ?? 0) . ',';
-  echo ($som[2] ?? 0);
   echo "]\n\n";
   flush();
 endwhile;
