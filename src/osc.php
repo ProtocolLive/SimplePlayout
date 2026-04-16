@@ -4,7 +4,7 @@
 ini_set('max_execution_time', '0');
 
 header('Content-Type: text/event-stream');
-header('Access-Control-Allow-Origin: http://127.0.0.1');
+header('Access-Control-Allow-Origin: *');
 header('Cache-Control:no-cache');
 header('Connection:keep-alive');
 $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
