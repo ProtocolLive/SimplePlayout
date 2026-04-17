@@ -1,3 +1,11 @@
+.AddBottom td{
+  border-bottom: solid 5px #000;
+}
+
+.AddTop td{
+  border-top: solid 5px #000;
+}
+
 .Played{
   background-color: #d4d4d4
 }

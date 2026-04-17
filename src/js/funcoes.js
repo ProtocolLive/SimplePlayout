@@ -14,9 +14,7 @@ const OpcoesDirecao = 4
 const OpcoesLogo = 6
 const OpcoesLive = 8
 
-let DraggedVideo = null
-let DraggedPlaylist = null
-
+let Dragged = null
 let TempoNdi = []
 
 Ajax('cls.php', 'Videos')
@@ -30,7 +28,8 @@ osc.onmessage = function (event) {
   document.getElementById('Volume2').value = event[3]
   //tempo reproduzido
   tr = document.getElementById(event[0].replaceAll(' ', ''))
-  if (tr === null) {
+  if (tr === null
+  || tr.classList.contains('Played') === false) {
     return
   }
   decorrido.setSeconds(Math.floor(event[1]))
@@ -54,15 +53,21 @@ osc.onmessage = function (event) {
   }
 }
 
-function CreateLine(Objeto) {
+function CreateLine(Objeto, EmCima) {
   const Css = 'BorderFinBlack TextCenter'
 
-  tr = document.createElement('tr')
-  if (DraggedVideo !== null) {
-    tr.id = DraggedVideo.cells[0].textContent.replaceAll(' ', '')
-  } else {
-    tr.id = DraggedPlaylist.getAttribute('id')
+  if(Dragged.cells.length === 4){
+    if(EmCima){
+      temp = Objeto
+    }else{
+      temp = Objeto.nextElementSibling
+    }
+    Objeto.parentNode.insertBefore(Dragged, temp)
+    return
   }
+
+  tr = document.createElement('tr')
+  tr.id = Dragged.cells[0].textContent.replaceAll(' ', '')
   DragEnable(tr)
 
   //hora
@@ -74,11 +79,7 @@ function CreateLine(Objeto) {
   td = document.createElement('td')
   td.classList = Css
   temp = document.createElement('span')
-  if (DraggedVideo !== null) {
-    temp.textContent = DraggedVideo.cells[0].textContent
-  } else {
-    temp.textContent = DraggedPlaylist.cells[VIDEO].children[0].textContent
-  }
+  temp.textContent = Dragged.cells[0].textContent
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))
   temp = document.createElement('span')
@@ -91,27 +92,13 @@ function CreateLine(Objeto) {
   td = document.createElement('td')
   td.classList = Css
   temp = document.createElement('span')
-  if (DraggedVideo !== null) {
-    if (DraggedVideo.cells[1] === undefined) {//ndi
-      temp.textContent = '00:00:00'
-    }else{
-      temp.textContent = DraggedVideo.cells[1].textContent
-    }
-  } else {
-    temp.textContent = DraggedPlaylist.cells[TEMPOS].children[TemposTotal].textContent
-  }
+  temp.textContent = Dragged.cells[1].textContent
   td.appendChild(temp)
   temp = document.createElement('span')
   temp.textContent = ' / '
   td.appendChild(temp)
   duracao = document.createElement('span')
-  if (DraggedVideo !== null) {
-    if (DraggedVideo.cells[1] !== undefined) {
-      duracao.textContent = DraggedVideo.cells[1].textContent
-    }
-  } else {
-    duracao.textContent = DraggedPlaylist.cells[TEMPOS].children[TemposTotal].textContent
-  }
+  duracao.textContent = Dragged.cells[1].textContent
   td.appendChild(duracao)
   td.appendChild(document.createElement('br'))
   temp = document.createElement('progress')
@@ -348,24 +335,52 @@ function CreateLine(Objeto) {
   tr.appendChild(td)
 
   tr.appendChild(td)
-  Objeto.parentNode.insertBefore(tr, Objeto.nextSibling)
-  if (DraggedVideo !== null) {
-    if (document.getElementById('Vazio') !== null) {
-      document.getElementById('Vazio').remove()
-    }
-  } else {
-    Objeto.previousSibling.remove()
+  if(EmCima){
+    temp = Objeto
+  }else{
+    temp = Objeto.nextSibling
   }
-  DraggedVideo = null
-  DraggedPlaylist = null
+  Objeto.parentNode.insertBefore(tr, temp)
+  if((temp = document.getElementById('Vazio')) !== null){
+    temp.remove()
+  }
+  Dragged = null
 }
 
 function DragEnable(tr){
   tr.setAttribute('draggable', 'true')
-  tr.setAttribute('ondragstart', "DraggedPlaylist=this")
-  tr.setAttribute('ondragover', "event.preventDefault();this.classList.add('Selected')")
-  tr.setAttribute('ondragleave', "this.classList.remove('Selected')")
-  tr.setAttribute('ondrop', "event.preventDefault();this.classList.remove('Selected');CreateLine(this);RecalcularTudo(this)")
+  tr.setAttribute('ondragstart', "Dragged=this")
+  tr.setAttribute('ondragover', "DragOver(event,this)")
+  tr.setAttribute('ondragleave', "DragLeave(this)")
+  tr.setAttribute('ondrop', "DragDrop(event,this)")
+}
+
+function DragDrop(Event, tr){
+  Event.preventDefault()
+  tr.classList.remove('Selected', 'AddTop', 'AddBottom')
+  medidas = tr.getBoundingClientRect()
+  meio = medidas.top + medidas.height / 2
+  CreateLine(tr, Event.clientY < meio)
+  RecalcularTudo(tr)
+}
+
+function DragLeave(tr){
+  tr.classList.remove('Selected', 'AddTop', 'AddBottom')
+}
+
+function DragOver(Event, tr){
+  if(Dragged !== tr){
+    event.preventDefault()
+    medidas = tr.getBoundingClientRect()
+    meio = medidas.top + medidas.height / 2
+    if(Event.clientY < meio){
+      tr.classList.add('AddTop')
+      tr.classList.remove('AddBottom')
+    }else{
+      tr.classList.remove('AddTop')
+      tr.classList.add('AddBottom')
+    }
+  }
 }
 
 function FiltraVideos(Texto) {
@@ -390,6 +405,11 @@ function Play(tr) {
   tr.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
   tr.classList.add('Played')
   tr.cells[VIDEO].children[2].remove()
+  tr.removeAttribute('draggable')
+  tr.removeAttribute('ondragstart')
+  tr.removeAttribute('ondragover')
+  tr.removeAttribute('ondragleave')
+  tr.removeAttribute('ondrop')
   //Hora dos próximos
   clearInterval(TempoNdi[2])
   if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
@@ -418,12 +438,12 @@ function Preload(tr){
 function RecalcularTudo(tr) {
   tr = tr.nextElementSibling
   while (tr !== null) {
-    if(tr.previousSibling.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
+    if(tr.previousElementSibling.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
       tr.cells[HORA].textContent = ''
     }else{
       tr.cells[HORA].textContent = TempoSoma(
-        tr.previousSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
-        tr.previousSibling.cells[TEMPOS].children[TemposTotal].textContent
+        tr.previousElementSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
+        tr.previousElementSibling.cells[TEMPOS].children[TemposTotal].textContent
       )
     }
     if(tr.cells[VIDEO].children[0].textContent !== 'ENTRADA NDI'){
