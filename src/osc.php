@@ -11,7 +11,6 @@ $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 $temp = socket_bind($sock, gethostbyname(gethostname()), 6250);
 while(true):
   $size = socket_recvfrom($sock, $data, 65536, 0, $from, $port);
-  //file_put_contents('a.txt', $data);
 
   echo "event: message\n";
   echo 'data: ["';
@@ -30,6 +29,8 @@ while(true):
     $tempo = substr($tempo, 0, 8);
     $tempo = unpack('G2', $tempo);
     echo $tempo[2];
+  else:
+    echo 0;
   endif;
   echo ',';
 
