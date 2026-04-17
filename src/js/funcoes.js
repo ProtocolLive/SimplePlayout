@@ -22,6 +22,7 @@ let TempoNdi = []
 Ajax('cls.php', 'Videos')
 Ajax('ConfigServer.php', 'AjaxBlank')
 
+decorrido = new Date('1970-1-1')
 osc.onmessage = function (event) {
   event = JSON.parse(event.data)
   //VU
@@ -32,7 +33,6 @@ osc.onmessage = function (event) {
   if (tr === null) {
     return
   }
-  decorrido = new Date('1970-1-1')
   decorrido.setSeconds(Math.floor(event[1]))
   restante = new Date('1970-1-1 ' + tr.cells[TEMPOS].children[TemposTotal].textContent)
   restante = new Date(restante - decorrido)
@@ -82,8 +82,8 @@ function CreateLine(Objeto) {
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))
   temp = document.createElement('span')
-  temp.innerHTML = '<a href"#" onclick="Play(this.parentNode.parentNode.parentNode)" class="Pointer">▶️</a>'
-  temp.innerHTML += '<a href"#" onclick="Remover(this.parentElement.parentElement.parentElement)" class="Pointer">❎</a>'
+  temp.innerHTML = '<a href"#" onclick="Play(this.closest(\'tr\'))" class="Pointer">▶️</a>' +
+    '<a href"#" onclick="Remover(this.closest(\'tr\'))" class="Pointer">❎</a>'
   td.appendChild(temp)
   tr.appendChild(td)
 
@@ -370,7 +370,7 @@ function DragEnable(tr){
 
 function FiltraVideos(Texto) {
   document.getElementById('Videos').querySelectorAll('tr').forEach(function (tr) {
-    if (tr.cells[0].textContent.toLowerCase().search(Texto.toLowerCase()) === -1) {
+    if (tr.cells[0].textContent.toLowerCase().includes(Texto.toLowerCase()) === false) {
       tr.style.display = 'none'
     } else {
       tr.style.display = ''
