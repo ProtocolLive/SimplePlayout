@@ -389,6 +389,7 @@ function Play(tr) {
   temp = new Date
   tr.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
   tr.classList.add('Played')
+  tr.cells[VIDEO].children[2].remove()
   //Hora dos próximos
   clearInterval(TempoNdi[2])
   if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
