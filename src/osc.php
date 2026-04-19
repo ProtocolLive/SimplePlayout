@@ -35,11 +35,15 @@ while(true):
   echo ',';
 
   $pos = strpos($data, '/channel/1/mixer/audio/volume');
-  $pos = strpos($data, ',iiiiiiiiiiiiiiii', $pos);
-  $offset = $pos + 17 + 1;
-  $offset += (4 - ($offset % 4)) % 4;
-  $som = unpack('N16', substr($data, $offset, 64));
-  echo $som[1] . ',' . $som[2];
+  if($pos !== false):
+    $pos = strpos($data, ',iiiiiiiiiiiiiiii', $pos);
+    $offset = $pos + 17 + 1;
+    $offset += (4 - ($offset % 4)) % 4;
+    $som = unpack('N16', substr($data, $offset, 64));
+    echo $som[1] . ',' . $som[2];
+  else:
+    echo '0,0';
+  endif;
 
   echo "]\n\n";
   flush();
