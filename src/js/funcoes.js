@@ -395,12 +395,22 @@ function FiltraVideos(Texto) {
 
 function Play(tr) {
   if(tr.getAttribute('preload') === null){
-    Preload(tr)
+    fetch(
+      'play.php?action=loadplay&video=' + tr.cells[VIDEO].children[0].textContent +
+      '&transicao=' + tr.cells[OPCOES].children[OpcoesTransicao].value +
+      '&duracao=' + tr.cells[OPCOES].children[OpcoesTempo].value +
+      '&tween=' + tr.cells[OPCOES].children[OpcoesTween].value +
+      '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value +
+      '&play.php?action=play&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
+      '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
+    )
+    tr.setAttribute('preload', true)
+  }else{
+    fetch(
+      'play.php?action=play&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
+      '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
+    )
   }
-  fetch(
-    'play.php?action=play&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
-    '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
-  )
   temp = new Date
   tr.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
   tr.classList.add('Played')
