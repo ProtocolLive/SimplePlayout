@@ -10,7 +10,7 @@ endif;
 $response = explode("\r\n", $response);
 array_shift($response);?>
 <table>
-  <tr draggable="true" ondragstart="DraggedVideo=this">
+  <tr draggable="true" ondragstart="Dragged=this">
     <td colspan="2" class="TextCenter BorderFinBlack">ENTRADA NDI</td>
   </tr><?php
   foreach($response as &$item):

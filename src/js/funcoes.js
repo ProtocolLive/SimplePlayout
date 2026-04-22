@@ -92,13 +92,19 @@ function CreateLine(Objeto, EmCima) {
   td = document.createElement('td')
   td.classList = Css
   temp = document.createElement('span')
-  temp.textContent = Dragged.cells[1].textContent
+  if(Dragged.cells[1] !== undefined){
+    temp.textContent = Dragged.cells[1].textContent
+  }else{
+    temp.textContent = '00:00:00'
+  }
   td.appendChild(temp)
   temp = document.createElement('span')
   temp.textContent = ' / '
   td.appendChild(temp)
   duracao = document.createElement('span')
-  duracao.textContent = Dragged.cells[1].textContent
+  if(Dragged.cells[1] !== undefined){
+    duracao.textContent = Dragged.cells[1].textContent
+  }
   td.appendChild(duracao)
   td.appendChild(document.createElement('br'))
   temp = document.createElement('progress')
