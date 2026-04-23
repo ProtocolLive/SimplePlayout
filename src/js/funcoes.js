@@ -53,6 +53,20 @@ osc.onmessage = function (event) {
   }
 }
 
+setInterval(function(){
+  if(document.getElementById('Playlist').querySelector('[cron="true"]') === null){
+    return
+  }
+  document.getElementById('Playlist').querySelectorAll('[cron="true"]').forEach(function(tr){
+    hora = new Date
+    hora.setSeconds(hora.getSeconds() + 1)
+    if(tr.cells[HORA].innerHTML === hora.toLocaleDateString() + '<br>' + hora.toLocaleTimeString()){
+      Play(tr)
+      return
+    }
+  })
+}, 500)
+
 function CreateLine(Objeto, EmCima) {
   const Css = 'BorderFinBlack TextCenter'
 
@@ -73,6 +87,7 @@ function CreateLine(Objeto, EmCima) {
   //hora
   td = document.createElement('td')
   td.classList = Css
+  td.setAttribute('onclick', 'CronSet(this)')
   tr.appendChild(td)
 
   //video
@@ -353,6 +368,32 @@ function CreateLine(Objeto, EmCima) {
   Dragged = null
 }
 
+function CronDone(Objeto){
+  data = Objeto.value.split(' ')
+  data[0] = data[0].split('/')
+  data[0] = data[0][1] + '/' + data[0][0] + '/' + data[0][2]
+  data = new Date(data[0] + ' ' + data[1])
+  Objeto.closest('tr').setAttribute('cron', true)
+  Objeto.parentNode.innerHTML = data.toLocaleDateString() + '<br>' + data.toLocaleTimeString()
+}
+
+function CronOut(Objeto){
+  Objeto.parentNode.innerHTML = ''
+}
+
+function CronSet(td){
+  if(td.parentNode.classList.contains('Played')){
+    return
+  }
+  temp = document.createElement('input')
+  temp.type = 'text'
+  temp.value = new Date().toLocaleString('pt-BR').replaceAll(',', '')
+  temp.setAttribute('onclick', 'event.stopPropagation()')
+  temp.setAttribute('onkeydown', 'if(event.key==="Enter")CronDone(this);if(event.key==="Escape")CronOut(this)')
+  td.innerHTML = ''
+  td.appendChild(temp)
+}
+
 function DragEnable(tr){
   tr.setAttribute('draggable', 'true')
   tr.setAttribute('ondragstart', "Dragged=this")
@@ -426,6 +467,7 @@ function Play(tr) {
   tr.removeAttribute('ondragover')
   tr.removeAttribute('ondragleave')
   tr.removeAttribute('ondrop')
+  tr.removeAttribute('cron')
   //Hora dos próximos
   clearInterval(TempoNdi[2])
   if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
