@@ -11,9 +11,9 @@ Meus conhecimentos são limitados, mas sempre gosto de compartilhar o que sei pa
 Prévia:
 <img width="1714" height="966" alt="image" src="https://github.com/user-attachments/assets/aca02df3-e1bf-4c54-9e06-f74d1d3fa1ab" />
 
-Para usá-lo, você precisa do [casparCG](https://www.casparcg.com) (2.5.0) e do [PHP](https://www.php.net) (8.5)
+Para usá-lo, você precisa do [casparCG](https://www.casparcg.com) (2.5.0) e do [PHP](https://www.php.net) (8.5). Uma opção é usar o [PHP Desktop](https://github.com/cztomczak/phpdesktop)
 
-Se você usar o servidor interno do PHP, você precisa criar 2 instâncias. Uma na porta de sua preferência (eu uso a 80) e outra na porta 8080.
+Se você usar o servidor interno do PHP, você precisa criar 2 instâncias. Uma na porta de sua preferência (ex 80) e outra na porta 8080.
 Isso é necessário porque o servidor interno é exclusivo pra desenvolvimento, e ele não aceita conexões simultâneas.
 
 Acesse o site no seu navegador, endereço 127.0.0.1
