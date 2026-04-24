@@ -368,14 +368,16 @@ function CreateLine(Objeto, EmCima) {
   Dragged = null
 }
 
-function CronDone(Objeto){
-  data = new Date(Objeto.value.replaceAll('T', ' '))
-  Objeto.closest('tr').setAttribute('cron', true)
-  Objeto.parentNode.innerHTML = data.toLocaleDateString() + '<br>' + data.toLocaleTimeString()
+function CronDone(td){
+  td.closest('tr').setAttribute('cron', true)
+  data = td.querySelector('input[type="datetime-local"]')
+  data = data.value.split('T')
+  data[0] = data[0].split('-')
+  td.innerHTML = data[0][2] + '/' + data[0][1] + '/' + data[0][0] + '<br>' + data[1]
 }
 
-function CronOut(Objeto){
-  Objeto.parentNode.innerHTML = ''
+function CronOut(td){
+  td.innerHTML = ''
 }
 
 function CronSet(td){
@@ -389,8 +391,18 @@ function CronSet(td){
   temp.value = temp2.getFullYear() + '-' + (temp2.getMonth() + 1).toString().padStart(2, '0') + '-' + temp2.getDate().toString().padStart(2, '0') + 'T' +
     temp2.getHours().toString().padStart(2, '0') + ':' + temp2.getMinutes().toString().padStart(2, '0') + ':' + temp2.getSeconds().toString().padStart(2, '0')
   temp.setAttribute('onclick', 'event.stopPropagation()')
-  temp.setAttribute('onkeydown', 'if(event.key==="Enter")CronDone(this);if(event.key==="Escape")CronOut(this)')
   td.innerHTML = ''
+  td.appendChild(temp)
+  td.appendChild(document.createElement('br'))
+  temp = document.createElement('button')
+  temp.type = 'button'
+  temp.textContent = 'Cancelar'
+  temp.setAttribute('onclick', 'event.stopPropagation();CronOut(this.closest(\'td\'))')
+  td.appendChild(temp)
+  temp = document.createElement('button')
+  temp.type = 'button'
+  temp.textContent = 'OK'
+  temp.setAttribute('onclick', 'event.stopPropagation();CronDone(this.closest(\'td\'))')
   td.appendChild(temp)
 }
 
