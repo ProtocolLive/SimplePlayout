@@ -374,6 +374,7 @@ function CronDone(td){
   data = data.value.split('T')
   data[0] = data[0].split('-')
   td.innerHTML = data[0][2] + '/' + data[0][1] + '/' + data[0][0] + '<br>' + data[1]
+  RecalcularTudo(td.closest('tr'))
 }
 
 function CronOut(td){
