@@ -369,10 +369,7 @@ function CreateLine(Objeto, EmCima) {
 }
 
 function CronDone(Objeto){
-  data = Objeto.value.split(' ')
-  data[0] = data[0].split('/')
-  data[0] = data[0][1] + '/' + data[0][0] + '/' + data[0][2]
-  data = new Date(data[0] + ' ' + data[1])
+  data = new Date(Objeto.value.replaceAll('T', ' '))
   Objeto.closest('tr').setAttribute('cron', true)
   Objeto.parentNode.innerHTML = data.toLocaleDateString() + '<br>' + data.toLocaleTimeString()
 }
@@ -386,8 +383,11 @@ function CronSet(td){
     return
   }
   temp = document.createElement('input')
-  temp.type = 'text'
-  temp.value = new Date().toLocaleString('pt-BR').replaceAll(',', '')
+  temp.type = 'datetime-local'
+  temp.step = 1
+  temp2 = new Date
+  temp.value = temp2.getFullYear() + '-' + (temp2.getMonth() + 1).toString().padStart(2, '0') + '-' + temp2.getDate().toString().padStart(2, '0') + 'T' +
+    temp2.getHours().toString().padStart(2, '0') + ':' + temp2.getMinutes().toString().padStart(2, '0') + ':' + temp2.getSeconds().toString().padStart(2, '0')
   temp.setAttribute('onclick', 'event.stopPropagation()')
   temp.setAttribute('onkeydown', 'if(event.key==="Enter")CronDone(this);if(event.key==="Escape")CronOut(this)')
   td.innerHTML = ''
