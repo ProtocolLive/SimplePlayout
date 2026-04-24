@@ -471,8 +471,7 @@ function Play(tr) {
       '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
     )
   }
-  temp = new Date
-  tr.cells[HORA].innerHTML = temp.toLocaleDateString() + '<br>' + temp.toLocaleTimeString()
+  tr.cells[HORA].innerHTML = DateFormat(new Date).replaceAll(' ', '<br>')
   tr.classList.add('Played')
   tr.cells[VIDEO].children[2].remove()
   tr.removeAttribute('draggable')
@@ -512,7 +511,7 @@ function RecalcularTudo(tr) {
     if(tr.previousElementSibling.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
       tr.cells[HORA].textContent = ''
     }else{
-      tr.cells[HORA].textContent = TempoSoma(
+      tr.cells[HORA].textContent = TimeSum(
         tr.previousElementSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
         tr.previousElementSibling.cells[TEMPOS].children[TemposTotal].textContent
       )
@@ -540,18 +539,4 @@ function Remover(tr) {
     document.getElementById('Playlist').appendChild(tr)
     DragEnable(tr)
   }
-}
-
-function TempoSoma(Start, Segundos) {
-  if (Start === '') {
-    return
-  }
-  Start = Start.split('/')
-  Start = Start[1] + '/' + Start[0] + '/' + Start[2]
-  Start = new Date(Start)
-  Segundos = Segundos.split(':')
-  Start.setSeconds(Start.getSeconds() + parseInt(Segundos[2]))
-  Start.setMinutes(Start.getMinutes() + parseInt(Segundos[1]))
-  Start.setHours(Start.getHours() + parseInt(Segundos[0]))
-  return Start.toLocaleDateString() + ' ' + Start.toLocaleTimeString()
 }
