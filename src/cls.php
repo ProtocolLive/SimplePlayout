@@ -24,7 +24,7 @@ array_shift($response);?>
       if($item[1] !== 'MOVIE'):
         continue;
       endif;?>
-      <tr draggable="true" ondragstart="Dragged=this" onclick="this.classList.toggle('Selected')">
+      <tr draggable="true" ondragstart="Dragged=this" onclick="this.classList.toggle('Selected')" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))">
         <td class="BorderFinBlack"><?=$item[0]?></td><?php
         $item[5] = explode('/', $item[5]);
         $item[5] = $item[5][1] / $item[5][0];
