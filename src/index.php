@@ -8,6 +8,7 @@
   <script src="js/ajax.js"></script>
   <script src="js/cron.js"></script>
   <script src="js/date.js"></script>
+  <script src="js/drag.js"></script>
   <script src="js/import.js"></script>
   <title>SimplePlayout</title>
 </head>
