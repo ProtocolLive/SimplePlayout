@@ -370,12 +370,10 @@ function CreateLine(Objeto, EmCima) {
 }
 
 function CronDone(td){
-  td.closest('tr').setAttribute('cron', true)
   data = td.querySelector('input[type="datetime-local"]')
-  data = data.value.split('T')
-  data[0] = data[0].split('-')
-  td.innerHTML = data[0][2] + '/' + data[0][1] + '/' + data[0][0] + '<br>' + data[1]
+  td.innerHTML = DateFormat(new Date(data.value.replaceAll('T', ' '))).replaceAll(' ', '<br>')
   RecalcularTudo(td.closest('tr'))
+  td.closest('tr').setAttribute('cron', true)
 }
 
 function CronOut(td){
