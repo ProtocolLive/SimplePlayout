@@ -7,13 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="js/ajax.js"></script>
   <script src="js/date.js"></script>
+  <script src="js/import.js"></script>
   <title>SimplePlayout</title>
 </head>
 <body>
   <div class="Flex">
     <div style="margin-right:10px">
       <div>
-        <a href="#" onclick="Ajax('config.php','AjaxWindow');document.getElementById('AjaxWindow').showModal()">⚙️</a>
+        <a href="#" onclick="Ajax('config.php','AjaxWindow');document.getElementById('AjaxWindow').showModal()" title="Configurações">⚙️</a>
+        <a href="#" onclick="Export()" title="Exportar">📤</a>
+        <a href="#" onclick="Import()" title="Importar">📥</a>
         <input type="checkbox" onclick="Ajax('play.php?action=gc&status='+this.checked,'AjaxBlank')"> GC &nbsp;
         <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
         <progress id="Volume1" min="0" max="1499999999"></progress>
@@ -38,7 +41,7 @@
       </div>
     </div>
     <div>
-      <a href="#" onclick="Ajax('cls.php','Videos')">🔄️</a>
+      <a href="#" onclick="Ajax('cls.php','Videos')" title="Atualizar">🔄️</a>
       <input type="text" onkeyup="FiltraVideos(this.value)">
       <div id="Videos" style="max-height:95vh;overflow-y:auto"></div>
     </div>

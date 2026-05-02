@@ -20,13 +20,13 @@ let TempoNdi = []
 Ajax('cls.php', 'Videos')
 Ajax('ConfigServer.php', 'AjaxBlank')
 
-decorrido = new Date('1970-1-1')
 osc.onmessage = function (event) {
   event = JSON.parse(event.data)
   //VU
   document.getElementById('Volume1').value = event[2]
   document.getElementById('Volume2').value = event[3]
   //tempo reproduzido
+  decorrido = new Date('1970-1-1')
   tr = document.getElementById(event[0].replaceAll(' ', ''))
   if (tr === null
   || tr.classList.contains('Played') === false) {
@@ -83,6 +83,7 @@ function CreateLine(Objeto, EmCima) {
   tr = document.createElement('tr')
   tr.id = Dragged.cells[0].textContent.replaceAll(' ', '')
   DragEnable(tr)
+  tr.setAttribute('onclick', 'Selecionar(event,this)')
 
   //hora
   td = document.createElement('td')
@@ -98,8 +99,8 @@ function CreateLine(Objeto, EmCima) {
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))
   temp = document.createElement('span')
-  temp.innerHTML = '<a href"#" onclick="Play(this.closest(\'tr\'))" class="Pointer">▶️</a>' +
-    '<a href"#" onclick="Remover(this.closest(\'tr\'))" class="Pointer">❎</a>'
+  temp.innerHTML = '<a href"#" onclick="event.stopPropagation();Play(this.closest(\'tr\'))" class="Pointer">▶️</a>' +
+    '<a href"#" onclick="event.stopPropagation();Remover(this.closest(\'tr\'))" class="Pointer">❎</a>'
   td.appendChild(temp)
   tr.appendChild(td)
 
@@ -538,5 +539,26 @@ function Remover(tr) {
     tr.appendChild(td)
     document.getElementById('Playlist').appendChild(tr)
     DragEnable(tr)
+  }
+}
+
+function Selecionar(Evento, tr){
+  if(tr.classList.contains('Played')){
+    return
+  }
+  if(Evento.shiftKey){
+    ultimo = document.getElementById('Playlist').querySelectorAll('tr.Selected')
+    if(ultimo.length === 0){
+      return
+    }
+    ultimo = ultimo[ultimo.length - 1]
+    ultimo = ultimo.nextElementSibling
+    while(ultimo !== tr){
+      ultimo.classList.toggle('Selected')
+      ultimo = ultimo.nextElementSibling
+    }
+    ultimo.classList.toggle('Selected')
+  }else{
+    tr.classList.toggle('Selected')
   }
 }
