@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="js/ajax.js"></script>
+  <script src="js/cron.js"></script>
   <script src="js/date.js"></script>
   <script src="js/import.js"></script>
   <title>SimplePlayout</title>
@@ -21,6 +22,7 @@
         <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
         <progress id="Volume1" min="0" max="1499999999"></progress>
         <progress id="Volume2" min="0" max="1499999999"></progress>
+        <span id="SumPlaylist"></span>
       </div>
       <div style="max-height:95vh;overflow-y:auto">
         <table>
