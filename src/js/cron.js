@@ -6,7 +6,7 @@ function CronDone(td){
 }
 
 function CronOut(td){
-  td.innerHTML = ''
+  td.innerHTML = td.getAttribute('lastvalue')
 }
 
 function CronSet(td){
@@ -20,6 +20,7 @@ function CronSet(td){
   temp.value = temp2.getFullYear() + '-' + (temp2.getMonth() + 1).toString().padStart(2, '0') + '-' + temp2.getDate().toString().padStart(2, '0') + 'T' +
     temp2.getHours().toString().padStart(2, '0') + ':' + temp2.getMinutes().toString().padStart(2, '0') + ':' + temp2.getSeconds().toString().padStart(2, '0')
   temp.setAttribute('onclick', 'event.stopPropagation()')
+  td.setAttribute('lastvalue', td.innerHTML)
   td.innerHTML = ''
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))

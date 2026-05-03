@@ -88,7 +88,7 @@ function CreateLine(Objeto, EmCima) {
   //hora
   td = document.createElement('td')
   td.classList = Css
-  td.setAttribute('onclick', 'CronSet(this)')
+  td.setAttribute('onclick', 'event.stopPropagation();CronSet(this)')
   tr.appendChild(td)
 
   //video
