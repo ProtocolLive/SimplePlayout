@@ -13,19 +13,21 @@
   <title>SimplePlayout</title>
 </head>
 <body>
-  <div class="Flex">
+  <main class="Flex">
     <div style="margin-right:10px">
       <div>
-        <a href="#" onclick="Ajax('config.php','AjaxWindow');document.getElementById('AjaxWindow').showModal()" title="Configurações">⚙️</a>
-        <a href="#" onclick="Export()" title="Exportar">📤</a>
-        <a href="#" onclick="Import()" title="Importar">📥</a>
-        <input type="checkbox" onclick="Ajax('play.php?action=gc&status='+this.checked,'AjaxBlank')"> GC &nbsp;
-        <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
-        <progress id="Volume1" min="0" max="1499999999"></progress>
-        <progress id="Volume2" min="0" max="1499999999"></progress>
-        <span id="SumPlaylist"></span>
+        <div>
+          <a href="#" onclick="Ajax('config.php','AjaxWindow');document.getElementById('AjaxWindow').showModal()" title="Configurações">⚙️</a>
+          <a href="#" onclick="Export()" title="Exportar">📤</a>
+          <a href="#" onclick="Import()" title="Importar">📥</a>
+          <input type="checkbox" onclick="Ajax('play.php?action=gc&status='+this.checked,'AjaxBlank')"> GC &nbsp;
+          <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
+          <progress id="Volume1" min="0" max="1499999999"></progress>
+          <progress id="Volume2" min="0" max="1499999999"></progress>
+        </div>
+        <div style="margin:5px 0 5px 0">Somatório da seleção: <span id="SumPlaylist">00:00:00</span></div>
       </div>
-      <div style="max-height:95vh;overflow-y:auto">
+      <section style="max-height:95vh;overflow-y:auto">
         <table>
           <thead>
             <tr>
@@ -41,14 +43,14 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </section>
     </div>
     <div>
       <a href="#" onclick="Ajax('cls.php','Videos')" title="Atualizar">🔄️</a>
       <input type="text" onkeyup="FiltraVideos(this.value)">
-      <div id="Videos" style="max-height:95vh;overflow-y:auto"></div>
+      <section id="Videos" style="max-height:95vh;overflow-y:auto"></section>
     </div>
-  </div>
+  </main>
 
   <dialog id="AjaxWindow"></dialog>
 

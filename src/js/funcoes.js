@@ -83,7 +83,7 @@ function CreateLine(Objeto, EmCima) {
   tr = document.createElement('tr')
   tr.id = Dragged.cells[0].textContent.replaceAll(' ', '')
   DragEnable(tr)
-  tr.setAttribute('onclick', 'Selecionar(event,this)')
+  tr.setAttribute('onclick', 'Selecionar(event,this);SomaTempoPlaylist(this)')
 
   //hora
   td = document.createElement('td')
@@ -486,4 +486,15 @@ function Selecionar(Evento, tr){
   }else{
     tr.classList.toggle('Selected')
   }
+}
+
+function SomaTempoPlaylist(){
+  tempo = new Date('1970-1-1')
+  document.getElementById('Playlist').querySelectorAll('tr.Selected').forEach(function(tr){
+    temp = tr.cells[TEMPOS].children[TemposTotal].textContent.split(':')
+    tempo.setHours(tempo.getHours() + parseInt(temp[0]))
+    tempo.setMinutes(tempo.getMinutes() + parseInt(temp[1]))
+    tempo.setSeconds(tempo.getSeconds() + parseInt(temp[2]))
+  })
+  document.getElementById('SumPlaylist').textContent = DateFormat(tempo).split(' ')[1]
 }
