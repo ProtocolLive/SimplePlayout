@@ -1,4 +1,6 @@
 <?php
+ */
+
 $action = $_GET['action'] ?? 'get';
 
 if($action === 'save'):
@@ -6,7 +8,9 @@ if($action === 'save'):
   file_put_contents('config.json', json_encode($_POST));
   require('ConfigServer.php');
 else:
-  $config = json_decode(file_get_contents('config.json'), true);
+  if(file_exists('config.json')):
+    $config = json_decode(file_get_contents('config.json'), true);
+  endif;
   $html = file_get_contents('config.htm');
   $html = str_replace('**SERVER**', $config['server'] ?? '', $html);
   $html = str_replace('**NDI**', $config['ndi'] ?? '', $html);
