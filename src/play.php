@@ -1,4 +1,8 @@
 <?php
+/**
+ * @version 2026.05.05.00
+ */
+
 require('SendData.php');
 ini_set('max_execution_time', '5');
 $config = json_decode(file_get_contents('config.json'), true);
@@ -10,30 +14,30 @@ or $_GET['action'] === 'loadplay'):
   else:
     $data = $_GET['video'];
   endif;
-  SendData('LOADBG 1-10 "' . $data. '" ' . $_GET['transicao'] . ' ' . $_GET['duracao'] . ' ' . $_GET['tween'] . ' ' . $_GET['direcao']);
+  SendData('LOADBG ' . $config['canal'] . '-10 "' . $data. '" ' . $_GET['transicao'] . ' ' . $_GET['duracao'] . ' ' . $_GET['tween'] . ' ' . $_GET['direcao']);
 endif;
 
 if($_GET['action'] === 'play'
 or $_GET['action'] === 'loadplay'):
   $data = 'PLAY 1-10' . "\r\n";
   if($_GET['logo'] == 'true'):
-    $data .= 'PLAY 1-20 "LOGO" MIX 30' . "\r\n";
+    $data .= 'PLAY ' . $config['canal'] . '-20 "LOGO" MIX 30' . "\r\n";
   else:
-    $data .= 'STOP 1-20' . "\r\n";
+    $data .= 'STOP ' . $config['canal'] . '-20' . "\r\n";
   endif;
   if($_GET['live'] == 'true'):
-    $data .= 'PLAY 1-21 "AO VIVO" MIX 30';
+    $data .= 'PLAY ' . $config['canal'] . '-21 "AO VIVO" MIX 30';
   else:
-    $data .= 'STOP 1-21';
+    $data .= 'STOP ' . $config['canal'] . '-21';
   endif;
   SendData($data);
 endif;
 
 if($_GET['action'] === 'gc'):
   if($_GET['status'] === 'true'):
-    SendData('PLAY 1-15 "ndi://' . $config['ndi2'] . '"');
+    SendData('PLAY ' . $config['canal'] . '-15 "ndi://' . $config['ndi2'] . '"');
   else:
-    SendData('STOP 1-15');
+    SendData('STOP ' . $config['canal'] . '-15');
   endif;
   return;
 endif;
