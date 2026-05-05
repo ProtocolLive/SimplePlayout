@@ -1,4 +1,7 @@
 <?php
+/**
+ * @version 2026.05.05.00
+ */
 
 require('SendData.php');
 
@@ -12,6 +15,9 @@ array_shift($response);?>
 <table>
   <tr draggable="true" ondragstart="Dragged=this">
     <td colspan="2" class="TextCenter BorderFinBlack">ENTRADA NDI</td>
+  </tr>
+  <tr draggable="true" ondragstart="Dragged=this">
+    <td colspan="2" class="TextCenter BorderFinBlack">CANAL 1</td>
   </tr><?php
   foreach($response as &$item):
     preg_match_all('/"([^"]*)"|\'([^\']*)\'|(\S+)/', $item, $matches);
