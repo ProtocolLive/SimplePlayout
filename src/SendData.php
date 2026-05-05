@@ -1,5 +1,5 @@
 <?php
-//2026.04.27.00
+//2026.05.05.00
 
 function SendData(
   string $Data,
@@ -27,8 +27,8 @@ function SendData(
     return $response;
   endif;
   file_put_contents('logs/play.log', "\t" . $response, FILE_APPEND);
-  if(filesize('logs/play.log') > 10 * 1024 * 1024) {
+  if(filesize('logs/play.log') > 10 * 1024 * 1024):
     rename('logs/play.log', 'logs/play_' . date('Y-m-d H:i') . '.log');
-  }
+  endif;
   return true;
 }
