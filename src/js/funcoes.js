@@ -382,7 +382,8 @@ function FiltraVideos(Texto) {
 function Play(tr) {
   if(tr.getAttribute('preload') === null){
     fetch(
-      'play.php?action=loadplay&video=' + tr.cells[VIDEO].children[0].textContent +
+      'play.php?action=loadplay&canal=' + document.getElementById('canal').value +
+      '&video=' + tr.cells[VIDEO].children[0].textContent +
       '&transicao=' + tr.cells[OPCOES].children[OpcoesTransicao].value +
       '&duracao=' + tr.cells[OPCOES].children[OpcoesTempo].value +
       '&tween=' + tr.cells[OPCOES].children[OpcoesTween].value +
@@ -394,7 +395,8 @@ function Play(tr) {
   }else{
     fetch(
       'play.php?action=play&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
-      '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
+      '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked +
+      '&canal=' + document.getElementById('canal').value
     )
   }
   tr.cells[HORA].innerHTML = DateFormat(new Date).replaceAll(' ', '<br>')

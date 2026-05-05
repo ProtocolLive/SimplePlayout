@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2026.05.05.00
+ * @version 2026.05.05.01
  */
 
 $action = $_GET['action'] ?? 'get';
@@ -19,6 +19,5 @@ else:
   $html = str_replace('**NDI2**', $config['ndi2'] ?? '', $html);
   $html = str_replace('**RTMP**', $config['rtmp'] ?? '', $html);
   $html = str_replace('**RTMP_KEY**', $config['rtmp_key'] ?? '', $html);
-  $html = str_replace('**CANAL**', $config['canal'] ?? 1, $html);
   echo $html;
 endif;

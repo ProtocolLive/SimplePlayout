@@ -20,6 +20,7 @@
           <a href="#" onclick="Ajax('config.php','AjaxWindow');document.getElementById('AjaxWindow').showModal()" title="Configurações">⚙️</a>
           <a href="#" onclick="Export()" title="Exportar">📤</a>
           <a href="#" onclick="Import()" title="Importar">📥</a>
+          <input type="number" id="canal" value="1" style="width:30px" title="Canal">
           <input type="checkbox" onclick="Ajax('play.php?action=gc&status='+this.checked,'AjaxBlank')"> GC &nbsp;
           <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
           <progress id="Volume1" min="0" max="1499999999"></progress>
