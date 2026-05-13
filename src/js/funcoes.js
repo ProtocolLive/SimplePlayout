@@ -402,12 +402,14 @@ function Play(tr) {
   tr.cells[HORA].innerHTML = DateFormat(new Date, true)
   tr.classList.add('Played')
   tr.cells[VIDEO].children[2].remove()
-  tr.previousElementSibling.cells[OPCOES].textContent = ''
   tr.removeAttribute('draggable')
   tr.removeAttribute('ondragstart')
   tr.removeAttribute('cron')
-  tr.previousElementSibling.removeAttribute('ondragover')
-  tr.previousElementSibling.removeAttribute('ondragleave')
+  if(tr.previousElementSibling !== null){
+    tr.previousElementSibling.cells[OPCOES].textContent = ''
+    tr.previousElementSibling.removeAttribute('ondragover')
+    tr.previousElementSibling.removeAttribute('ondragleave')
+  }
   //Hora dos próximos
   clearInterval(TempoNdi[2])
   if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
