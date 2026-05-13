@@ -7,6 +7,9 @@ require('SendData.php');
 ini_set('max_execution_time', '5');
 $config = json_decode(file_get_contents('config.json'), true);
 
+$_GET['video'] ??= null;
+$_GET['action'] ??= null;
+
 if($_GET['video'] !== 'CANAL 1'
 and ($_GET['action'] === 'load' or $_GET['action'] === 'loadplay')):
   if($_GET['video'] === 'ENTRADA NDI'):
@@ -24,18 +27,20 @@ or $_GET['action'] === 'loadplay'):
   else:
     $data = 'PLAY ' . $_GET['canal'] . '-10' . "\r\n";
   endif;
-  if($_GET['logo'] == 'true'):
-    $data .= 'PLAY ' . $_GET['canal'] . '-20 "LOGO" MIX 30' . "\r\n";
-  else:
-    $data .= 'STOP ' . $_GET['canal'] . '-20' . "\r\n";
-  endif;
-  if($_GET['live'] == 'true'):
-    $data .= 'PLAY ' . $_GET['canal'] . '-21 "AO VIVO" MIX 30';
-  else:
-    $data .= 'STOP ' . $_GET['canal'] . '-21';
-  endif;
   SendData($data);
 endif;
+
+if($_GET['logo'] == 'true'):
+  $data .= 'PLAY ' . $_GET['canal'] . '-20 "LOGO" MIX 30' . "\r\n";
+else:
+  $data .= 'STOP ' . $_GET['canal'] . '-20' . "\r\n";
+endif;
+if($_GET['live'] == 'true'):
+  $data .= 'PLAY ' . $_GET['canal'] . '-21 "AO VIVO" MIX 30';
+else:
+  $data .= 'STOP ' . $_GET['canal'] . '-21';
+endif;
+SendData($data);
 
 if($_GET['action'] === 'gc'):
   if($_GET['status'] === 'true'):

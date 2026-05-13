@@ -342,12 +342,14 @@ function CreateLine(Objeto, EmCima) {
   td.appendChild(document.createElement('br'))
   temp = document.createElement('input')
   temp.type = 'checkbox'
+  temp.setAttribute('onclick', 'event.stopPropagation();Ajax(\'play.php?logo=\'+this.checked+\'&canal=\'+document.getElementById(\'canal\').value,\'AjaxBlank\')')
   td.appendChild(temp)
   temp = document.createElement('span')
   temp.textContent = 'Logo'
   td.appendChild(temp)
   temp = document.createElement('input')
   temp.type = 'checkbox'
+  temp.setAttribute('onclick', 'event.stopPropagation();Ajax(\'play.php?logo=\'+this.checked+\'&canal=\'+document.getElementById(\'canal\').value,\'AjaxBlank\')')
   td.appendChild(temp)
   temp = document.createElement('span')
   temp.textContent = 'Live'
@@ -400,6 +402,7 @@ function Play(tr) {
   tr.cells[HORA].innerHTML = DateFormat(new Date, true)
   tr.classList.add('Played')
   tr.cells[VIDEO].children[2].remove()
+  tr.previousElementSibling.cells[OPCOES].textContent = ''
   tr.removeAttribute('draggable')
   tr.removeAttribute('ondragstart')
   tr.removeAttribute('cron')
