@@ -13,10 +13,10 @@ endif;
 $response = explode("\r\n", $response);
 array_shift($response);?>
 <table>
-  <tr draggable="true" ondragstart="Dragged=this">
+  <tr draggable="true" ondragstart="Dragged=this" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))">
     <td colspan="2" class="TextCenter BorderFinBlack">ENTRADA NDI</td>
   </tr>
-  <tr draggable="true" ondragstart="Dragged=this">
+  <tr draggable="true" ondragstart="Dragged=this" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))">
     <td colspan="2" class="TextCenter BorderFinBlack">CANAL 1</td>
   </tr><?php
   foreach($response as &$item):
