@@ -496,10 +496,10 @@ function Selecionar(Evento, tr){
 function SomaTempoPlaylist(){
   tempo = new Date('1970-1-1')
   document.getElementById('Playlist').querySelectorAll('tr.Selected').forEach(function(tr){
-    temp = tr.cells[TEMPOS].children[TemposTotal].textContent.split(':')
-    tempo.setHours(tempo.getHours() + parseInt(temp[0]))
-    tempo.setMinutes(tempo.getMinutes() + parseInt(temp[1]))
-    tempo.setSeconds(tempo.getSeconds() + parseInt(temp[2]))
+    temp = tr.cells[TEMPOS].children[TemposTotal].textContent.split(':').map(Number)
+    tempo.setHours(tempo.getHours() + temp[0])
+    tempo.setMinutes(tempo.getMinutes() + temp[1])
+    tempo.setSeconds(tempo.getSeconds() + temp[2])
   })
   document.getElementById('SumPlaylist').textContent = DateFormat(tempo).split(' ')[1]
 }
