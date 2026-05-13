@@ -402,10 +402,9 @@ function Play(tr) {
   tr.cells[VIDEO].children[2].remove()
   tr.removeAttribute('draggable')
   tr.removeAttribute('ondragstart')
-  tr.removeAttribute('ondragover')
-  tr.removeAttribute('ondragleave')
-  tr.removeAttribute('ondrop')
   tr.removeAttribute('cron')
+  tr.previousElementSibling.removeAttribute('ondragover')
+  tr.previousElementSibling.removeAttribute('ondragleave')
   //Hora dos próximos
   clearInterval(TempoNdi[2])
   if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){

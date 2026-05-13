@@ -7,10 +7,15 @@ function DragEnable(tr){
 }
 
 function DragDrop(Event, tr){
+  const medidas = tr.getBoundingClientRect()
+  const meio = medidas.top + medidas.height / 2
+  if(tr.classList.contains('Played')
+  && tr === tr.parentElement.lastElementChild
+  && Event.clientY < meio){
+    return
+  }
   Event.preventDefault()
   tr.classList.remove('Selected', 'AddTop', 'AddBottom')
-  medidas = tr.getBoundingClientRect()
-  meio = medidas.top + medidas.height / 2
   CreateLine(tr, Event.clientY < meio)
   RecalcularTudo(tr)
 }
@@ -20,6 +25,7 @@ function DragLeave(tr){
 }
 
 function DragOver(Event, tr){
+  const ultimo = tr.parentElement.lastElementChild
   if(Dragged === tr){
     return
   }
@@ -27,7 +33,9 @@ function DragOver(Event, tr){
   medidas = tr.getBoundingClientRect()
   meio = medidas.top + medidas.height / 2
   if(Event.clientY < meio){
-    tr.classList.add('AddTop')
+    if(tr.classList.contains('Played') === false && tr !== ultimo){
+      tr.classList.add('AddTop')
+    }
     tr.classList.remove('AddBottom')
   }else{
     tr.classList.remove('AddTop')
