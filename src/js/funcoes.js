@@ -386,7 +386,7 @@ function Play(tr) {
       '&duracao=' + tr.cells[OPCOES].children[OpcoesTempo].value +
       '&tween=' + tr.cells[OPCOES].children[OpcoesTween].value +
       '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value +
-      '&play.php?action=play&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
+      '&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
       '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
     )
     tr.setAttribute('preload', true)
