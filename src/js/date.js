@@ -1,14 +1,15 @@
 /**
  * @param {Date} Data
+ * @param {boolean} Br
  * @returns Formato DD/MM/YYYY HH:MM:SS
  */
-function DateFormat(Data){
+function DateFormat(Data, Br){
   return Data.getDate().toString().padStart(2, '0') + '/' +
-  (Data.getMonth() + 1).toString().padStart(2, '0') + '/' +
-  Data.getFullYear() + ' ' +
-  Data.getHours().toString().padStart(2, '0') + ':' +
-  Data.getMinutes().toString().padStart(2, '0') + ':' +
-  Data.getSeconds().toString().padStart(2, '0')
+    (Data.getMonth() + 1).toString().padStart(2, '0') + '/' +
+    Data.getFullYear() + (Br ? '<br>' : ' ') +
+    Data.getHours().toString().padStart(2, '0') + ':' +
+    Data.getMinutes().toString().padStart(2, '0') + ':' +
+    Data.getSeconds().toString().padStart(2, '0')
 }
 
 /**
@@ -25,15 +26,16 @@ function DatePrepare(Data){
  * 
  * @param {string} Start Hora inicial, no formato DD/MM/YYYY HH:MM:SS
  * @param {string} Seconds Tempo a adicionar, no formato HH:MM:SS
+ * @param {boolean} Br
  */
-function TimeSum(Start, Seconds) {
+function TimeSum(Start, Seconds, Br) {
   if (Start === '') {
     return
   }
   Start = DatePrepare(Start)
-  Seconds = Seconds.split(':')
-  Start.setSeconds(Start.getSeconds() + parseInt(Seconds[2]))
-  Start.setMinutes(Start.getMinutes() + parseInt(Seconds[1]))
-  Start.setHours(Start.getHours() + parseInt(Seconds[0]))
-  return DateFormat(Start)
+  Seconds = Seconds.split(':').map(Number)
+  Start.setSeconds(Start.getSeconds() + Seconds[2])
+  Start.setMinutes(Start.getMinutes() + Seconds[1])
+  Start.setHours(Start.getHours() + Seconds[0])
+  return DateFormat(Start, Br)
 }

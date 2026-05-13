@@ -54,13 +54,11 @@ osc.onmessage = function (event) {
 }
 
 setInterval(function(){
-  if(document.getElementById('Playlist').querySelector('[cron="true"]') === null){
-    return
-  }
   document.getElementById('Playlist').querySelectorAll('[cron="true"]').forEach(function(tr){
     hora = new Date
     hora.setSeconds(hora.getSeconds() + 1)
-    if(tr.cells[HORA].innerHTML === hora.toLocaleDateString() + '<br>' + hora.toLocaleTimeString()){
+    hora = DateFormat(hora, true)
+    if(tr.cells[HORA].innerHTML === hora){
       Play(tr)
       return
     }
@@ -399,7 +397,7 @@ function Play(tr) {
       '&canal=' + document.getElementById('canal').value
     )
   }
-  tr.cells[HORA].innerHTML = DateFormat(new Date).replaceAll(' ', '<br>')
+  tr.cells[HORA].innerHTML = DateFormat(new Date, true)
   tr.classList.add('Played')
   tr.cells[VIDEO].children[2].remove()
   tr.removeAttribute('draggable')
@@ -442,13 +440,14 @@ function RecalcularTudo(tr) {
     }else{
       tr.cells[HORA].textContent = TimeSum(
         tr.previousElementSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
-        tr.previousElementSibling.cells[TEMPOS].children[TemposTotal].textContent
+        tr.previousElementSibling.cells[TEMPOS].children[TemposTotal].textContent,
+        true
       )
     }
     if(tr.cells[VIDEO].children[0].textContent !== 'ENTRADA NDI'){
       tr.cells[TEMPOS].children[TemposRestante].textContent = tr.cells[TEMPOS].children[TemposTotal].textContent
     }
-    tr.cells[HORA].innerHTML = tr.cells[HORA].innerHTML.replaceAll(' ', '<br>')
+    tr.cells[HORA].innerHTML = tr.cells[HORA].innerHTML
     tr.classList.remove('Played')
     tr.removeAttribute('preload')
     tr = tr.nextElementSibling
