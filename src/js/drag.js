@@ -20,16 +20,17 @@ function DragLeave(tr){
 }
 
 function DragOver(Event, tr){
-  if(Dragged !== tr){
-    event.preventDefault()
-    medidas = tr.getBoundingClientRect()
-    meio = medidas.top + medidas.height / 2
-    if(Event.clientY < meio){
-      tr.classList.add('AddTop')
-      tr.classList.remove('AddBottom')
-    }else{
-      tr.classList.remove('AddTop')
-      tr.classList.add('AddBottom')
-    }
+  if(Dragged === tr){
+    return
+  }
+  event.preventDefault()
+  medidas = tr.getBoundingClientRect()
+  meio = medidas.top + medidas.height / 2
+  if(Event.clientY < meio){
+    tr.classList.add('AddTop')
+    tr.classList.remove('AddBottom')
+  }else{
+    tr.classList.remove('AddTop')
+    tr.classList.add('AddBottom')
   }
 }
