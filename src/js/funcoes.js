@@ -413,8 +413,11 @@ function Play(tr) {
     TempoNdi[1] = new Date('1970-1-1')
     TempoNdi[2] = setInterval(function(){
       TempoNdi[1].setSeconds(TempoNdi[1].getSeconds() + 1)
-      TempoNdi[0].cells[TEMPOS].children[TemposTotal].textContent = TempoNdi[1].toLocaleTimeString()
-    },1000)
+      TempoNdi[0].cells[TEMPOS].children[TemposTotal].textContent = TempoNdi[1].toLocaleTimeString(
+        [],
+        {hour: '2-digit', minute: '2-digit', second: '2-digit'}
+      )
+    }, 1000)
   }else{
     RecalcularTudo(tr)
   }
