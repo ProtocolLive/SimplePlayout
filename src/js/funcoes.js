@@ -440,8 +440,8 @@ function RecalcularTudo(tr) {
   while (tr !== null) {
     if(tr.previousElementSibling.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
       tr.cells[HORA].textContent = ''
-    }else{
-      tr.cells[HORA].textContent = TimeSum(
+    }else if(tr.previousElementSibling.cells[HORA].innerHTML !== ''){
+      tr.cells[HORA].innerHTML = TimeSum(
         tr.previousElementSibling.cells[HORA].innerHTML.replaceAll('<br>', ' '),
         tr.previousElementSibling.cells[TEMPOS].children[TemposTotal].textContent,
         true
