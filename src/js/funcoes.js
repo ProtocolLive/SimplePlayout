@@ -428,7 +428,8 @@ function Preload(tr){
     '&transicao=' + tr.cells[OPCOES].children[OpcoesTransicao].value +
     '&duracao=' + tr.cells[OPCOES].children[OpcoesTempo].value +
     '&tween=' + tr.cells[OPCOES].children[OpcoesTween].value +
-    '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value
+    '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value +
+    '&canal=' + document.getElementById('canal').value
   )
   tr.setAttribute('preload', true)
 }
