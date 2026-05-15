@@ -16,7 +16,7 @@ Para usá-lo, você precisa do [CasparCG](https://www.casparcg.com) (2.5.0) e do
 Se você usar o servidor interno do PHP, você precisa criar 2 instâncias. Uma na porta de sua preferência (ex 80) e outra na porta 8080.
 Isso é necessário porque o servidor interno é exclusivo pra desenvolvimento, e ele não aceita conexões simultâneas.
 
-Acesse o site no seu navegador, endereço 127.0.0.1
+Crie o servidor na pasta __src__ e acesse o site no seu navegador, endereço 127.0.0.1
 
 Ao abrir o site pela primeira vez, coloque o IP do servidor nas configurações (engrenagem)
 
