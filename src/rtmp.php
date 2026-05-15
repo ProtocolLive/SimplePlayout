@@ -1,9 +1,13 @@
 <?php
+/**
+ * @version 2026.05.14.00
+ */
+
 require('SendData.php');
 
 $config = json_decode(file_get_contents('config.json'), true);
 $rtmp = $config['rtmp'];
-if(substr($rtmp, -1) !== '/'):
+if(str_ends_with($rtmp, '/') === false):
   $rtmp .= '/';
 endif;
 $rtmp .= $config['rtmp_key'];
