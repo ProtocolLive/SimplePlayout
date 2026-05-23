@@ -342,14 +342,14 @@ function CreateLine(Objeto, EmCima) {
   td.appendChild(document.createElement('br'))
   temp = document.createElement('input')
   temp.type = 'checkbox'
-  temp.setAttribute('onclick', 'event.stopPropagation();Ajax(\'play.php?logo=\'+this.checked+\'&canal=\'+document.getElementById(\'canal\').value,\'AjaxBlank\')')
+  temp.setAttribute('onclick', 'event.stopPropagation();if(this.closest(\'tr\').classList.contains(\'Played\'))Ajax(\'play.php?logo=\'+this.checked+\'&canal=\'+document.getElementById(\'canal\').value,\'AjaxBlank\')')
   td.appendChild(temp)
   temp = document.createElement('span')
   temp.textContent = 'Logo'
   td.appendChild(temp)
   temp = document.createElement('input')
   temp.type = 'checkbox'
-  temp.setAttribute('onclick', 'event.stopPropagation();Ajax(\'play.php?logo=\'+this.checked+\'&canal=\'+document.getElementById(\'canal\').value,\'AjaxBlank\')')
+  temp.setAttribute('onclick', 'event.stopPropagation();if(this.closest(\'tr\').classList.contains(\'Played\'))Ajax(\'play.php?logo=\'+this.checked+\'&canal=\'+document.getElementById(\'canal\').value,\'AjaxBlank\')')
   td.appendChild(temp)
   temp = document.createElement('span')
   temp.textContent = 'Live'
