@@ -98,7 +98,7 @@ function CreateLine(Objeto, EmCima) {
   td.appendChild(document.createElement('br'))
   temp = document.createElement('span')
   temp.innerHTML = '<a href"#" onclick="event.stopPropagation();Play(this.closest(\'tr\'))" class="Pointer">▶️</a>' +
-    '<a href"#" onclick="event.stopPropagation();Remover(this.closest(\'tr\'))" class="Pointer">❎</a>'
+    '<a href"#" onclick="event.stopPropagation();Remover(this.closest(\'tr\'));SomaTempoPlaylist(this.closest(\'tr\'))" class="Pointer">❎</a>'
   td.appendChild(temp)
   tr.appendChild(td)
 
