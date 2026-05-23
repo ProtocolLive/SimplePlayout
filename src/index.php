@@ -26,7 +26,10 @@
           <progress id="Volume1" min="0" max="1499999999"></progress>
           <progress id="Volume2" min="0" max="1499999999"></progress>
         </div>
-        <div style="margin:5px 0 5px 0">Somatório da seleção: <span id="SumPlaylist">00:00:00</span></div>
+        <div style="margin:5px 0 5px 0">
+          <a href="#" onclick="Limpar()" title="Limpar seleção">🧹</a>
+          Somatório da seleção: <span id="SumPlaylist">00:00:00</span>
+        </div>
       </div>
       <section style="max-height:93vh;overflow-y:auto">
         <table>

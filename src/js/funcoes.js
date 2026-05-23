@@ -380,6 +380,13 @@ function FiltraVideos(Texto) {
   })
 }
 
+function Limpar(){
+  document.getElementById('Playlist').querySelectorAll('tr.Selected').forEach(function(tr){
+    tr.classList.remove('Selected')
+  })
+  SomaTempoPlaylist()
+}
+
 function Play(tr) {
   if(tr.getAttribute('preload') === null){
     fetch(
