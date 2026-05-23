@@ -28,7 +28,7 @@
         </div>
         <div style="margin:5px 0 5px 0">Somatório da seleção: <span id="SumPlaylist">00:00:00</span></div>
       </div>
-      <section style="max-height:95vh;overflow-y:auto">
+      <section style="max-height:93vh;overflow-y:auto">
         <table>
           <thead>
             <tr>
@@ -49,7 +49,7 @@
     <div>
       <a href="#" onclick="Ajax('cls.php','Videos')" title="Atualizar">🔄️</a>
       <input type="text" onkeyup="FiltraVideos(this.value)">
-      <section id="Videos" style="max-height:95vh;overflow-y:auto"></section>
+      <section id="Videos" style="max-height:96vh;overflow-y:auto"></section>
     </div>
   </main>
 
