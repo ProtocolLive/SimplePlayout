@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2026.05.05.00
+ * @version 2026.05.23.00
  */
 
 require('SendData.php');
@@ -12,11 +12,11 @@ if($response === false):
 endif;
 $response = explode("\r\n", $response);
 array_shift($response);?>
-<table>
-  <tr draggable="true" ondragstart="Dragged=this" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))">
+<table id="Videos">
+  <tr draggable="true" ondragstart="Dragged=this" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))" id="video-ENTRADANDI">
     <td colspan="2" class="TextCenter BorderFinBlack">ENTRADA NDI</td>
   </tr>
-  <tr draggable="true" ondragstart="Dragged=this" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))">
+  <tr draggable="true" ondragstart="Dragged=this" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))" id="video-CANAL1">
     <td colspan="2" class="TextCenter BorderFinBlack">CANAL 1</td>
   </tr><?php
   foreach($response as &$item):
@@ -30,7 +30,7 @@ array_shift($response);?>
       if($item[1] !== 'MOVIE'):
         continue;
       endif;?>
-      <tr draggable="true" ondragstart="Dragged=this" onclick="this.classList.toggle('Selected')" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))">
+      <tr draggable="true" ondragstart="Dragged=this" onclick="this.classList.toggle('Selected')" ondblclick="Dragged=this;CreateLine(document.getElementById('Playlist').querySelector('tr:last-of-type'))" id="video-<?=str_replace(' ', '', $item[0])?>">
         <td class="BorderFinBlack"><?=$item[0]?></td><?php
         $item[5] = explode('/', $item[5]);
         $item[5] = $item[5][1] / $item[5][0];

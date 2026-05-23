@@ -26,15 +26,10 @@ function Import(){
   file.onload = function(e){
     data = JSON.parse(e.target.result)
     data.forEach(function(video){
-      document.getElementById('Videos').querySelectorAll('tr').forEach(function(tr){
-        if(tr.cells.length === 2
-        && tr.cells[0].textContent === video[1]){
-          tr.ondblclick()
-          document.getElementById(video[1].replaceAll(' ', '')).cells[HORA].innerHTML = video[0].replaceAll(' ', '<br>')
-        }
-      })
+      const id = video[1].replaceAll(' ', '')
+      document.getElementById('video-' + id).ondblclick()
+      document.getElementById(id).cells[HORA].innerHTML = video[0].replaceAll(' ', '<br>')
     })
-    document.removeChild(obj)
   }
   obj = document.createElement('input')
   obj.type = 'file'
