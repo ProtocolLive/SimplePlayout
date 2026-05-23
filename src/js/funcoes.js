@@ -110,6 +110,7 @@ function CreateLine(Objeto, EmCima) {
     temp.textContent = Dragged.cells[1].textContent
   }else{
     temp.textContent = '00:00:00'
+    tr.classList.add('Ndi')
   }
   td.appendChild(temp)
   temp = document.createElement('span')
