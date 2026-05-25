@@ -1,5 +1,5 @@
 <?php
-//Versão 2026.05.25.00
+//Versão 2026.05.25.01
 
 ini_set('max_execution_time', '0');
 
@@ -22,7 +22,12 @@ while(true):
     echo '"' . $mensagens[$index]['args'][0] . '"';
   endif;
   $index = array_search('/channel/1/stage/layer/10/foreground/file/time', array_column($mensagens, 'address'));
-  echo ',' . $mensagens[$index]['args'][0] . ']' . "\n\n";
+  if($index === false):
+    echo ',0';
+  else:
+    echo ',' . $mensagens[$index]['args'][0];
+  endif;
+  echo ']' . "\n\n";
 endwhile;
 
 function ParseOsc(
