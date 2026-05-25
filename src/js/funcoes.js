@@ -40,9 +40,8 @@ osc.onmessage = function (event) {
   //carregar o proximo
   if(tr.cells[TEMPOS].children[TemposRestante].textContent === '00:00:05'
   && tr.nextElementSibling !== null
-  && tr.nextElementSibling.getAttribute('preload') === null){
+  && tr.nextElementSibling.classList.contains('Preload') === false){
     Preload(tr.nextElementSibling)
-    return
   }
   //play no proximo
   if (tr.cells[TEMPOS].children[TemposRestante].textContent === '00:00:00'
@@ -403,7 +402,7 @@ function Limpar(){
 }
 
 function Play(tr) {
-  if(tr.getAttribute('preload') === null){
+  if(tr.classList.contains('Preload') === false){
     fetch(
       'play.php?action=loadplay&canal=' + document.getElementById('canal').value +
       '&video=' + tr.cells[VIDEO].children[0].textContent +
@@ -414,7 +413,6 @@ function Play(tr) {
       '&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
       '&live=' + tr.cells[OPCOES].children[OpcoesLive].checked
     )
-    tr.setAttribute('preload', true)
   }else{
     fetch(
       'play.php?action=play&logo=' + tr.cells[OPCOES].children[OpcoesLogo].checked +
@@ -428,6 +426,7 @@ function Play(tr) {
   tr.removeAttribute('draggable')
   tr.removeAttribute('ondragstart')
   tr.removeAttribute('cron')
+  tr.classList.remove('Preload')
   if(tr.previousElementSibling !== null){
     tr.previousElementSibling.cells[OPCOES].textContent = ''
     tr.previousElementSibling.removeAttribute('ondragover')
@@ -459,7 +458,7 @@ function Preload(tr){
     '&direcao=' + tr.cells[OPCOES].children[OpcoesDirecao].value +
     '&canal=' + document.getElementById('canal').value
   )
-  tr.setAttribute('preload', true)
+  tr.classList.add('Preload')
 }
 
 function RecalcularTudo(tr) {
@@ -479,7 +478,7 @@ function RecalcularTudo(tr) {
     }
     tr.cells[HORA].innerHTML = tr.cells[HORA].innerHTML
     tr.classList.remove('Played')
-    tr.removeAttribute('preload')
+    tr.classList.remove('Preload')
     tr = tr.nextElementSibling
   }
 }
