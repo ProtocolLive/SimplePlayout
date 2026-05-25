@@ -1,5 +1,5 @@
 <?php
-//Versão 2026.04.02.00
+//Versão 2026.05.25.00
 
 ini_set('max_execution_time', '0');
 
@@ -7,44 +7,80 @@ header('Content-Type: text/event-stream');
 header('Access-Control-Allow-Origin: *');
 header('Cache-Control:no-cache');
 header('Connection:keep-alive');
+
 $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 $temp = socket_bind($sock, gethostbyname(gethostname()), 6250);
 while(true):
-  $size = socket_recvfrom($sock, $data, 65536, 0, $from, $port);
-
+  socket_recvfrom($sock, $buffer, 4096, 0, $from, $portFrom);
+  $mensagens = ParseOsc($buffer);
   echo "event: message\n";
-  echo 'data: ["';
-  $pos = strpos($data, '/channel/1/stage/layer/10/foreground/file/name');
-  if($pos !== false):
-    $start = $pos + 46 + 6;
-    $end = strpos($data, "\0", $start);
-    echo substr($data, $start, $end - $start);
-  endif;
-  echo '",';
-
-  $pos = strpos($data, '/channel/1/stage/layer/10/foreground/file/time');
-  if($pos !== false):
-    $tempo = substr($data, $pos + 46);
-    $tempo = trim($tempo, "\0");
-    $tempo = substr($tempo, 0, 8);
-    $tempo = unpack('G2', $tempo);
-    echo $tempo[2];
+  echo 'data: [';
+  $index = array_search('/channel/1/stage/layer/10/foreground/file/name', array_column($mensagens, 'address'));
+  if($index === false):
+    echo '""';
   else:
-    echo 0;
+    echo '"' . $mensagens[$index]['args'][0] . '"';
   endif;
-  echo ',';
-
-  $pos = strpos($data, '/channel/1/mixer/audio/volume');
-  if($pos !== false):
-    $pos = strpos($data, ',iiiiiiiiiiiiiiii', $pos);
-    $offset = $pos + 17 + 1;
-    $offset += (4 - ($offset % 4)) % 4;
-    $som = unpack('N16', substr($data, $offset, 64));
-    echo $som[1] . ',' . $som[2];
-  else:
-    echo '0,0';
-  endif;
-
-  echo "]\n\n";
-  flush();
+  $index = array_search('/channel/1/stage/layer/10/foreground/file/time', array_column($mensagens, 'address'));
+  echo ',' . $mensagens[$index]['args'][0] . ']' . "\n\n";
 endwhile;
+
+function ParseOsc(
+  string $buffer,
+  &$offset = 0
+):array{
+  $results = [];
+  $header = OscString($buffer, $offset);
+  if($header === "#bundle"):
+    $offset += 8;
+    while($offset < strlen($buffer)):
+      $elementSize = unpack("N", substr($buffer, $offset, 4))[1];
+      $offset += 4;
+      $elementData = substr($buffer, $offset, $elementSize);
+      $subOffset = 0;
+      $results = array_merge($results, ParseOsc($elementData, $subOffset));
+      $offset += $elementSize;
+    endwhile;
+  else:
+    $address = $header;
+    $tags = OscString($buffer, $offset);
+    $args = [];
+    if(str_starts_with($tags, ',')):
+      $tagArray = str_split(substr($tags, 1));
+      foreach($tagArray as $tag):
+        if($tag === 'f'):
+          $val = unpack("f", strrev(substr($buffer, $offset, 4)))[1];
+          $args[] = round($val, 4);
+          $offset += 4;
+        elseif($tag === 'i'):
+          $val = unpack("N", substr($buffer, $offset, 4))[1];
+          if ($val > 0x7FFFFFFF) $val -= 0x100000000;
+          $args[] = $val;
+          $offset += 4;
+        elseif($tag === 's'):
+          $args[] = OscString($buffer, $offset);
+        endif;
+      endforeach;
+    endif;
+    $results[] = [
+      'address' => $address,
+      'tags' => $tags,
+      'args' => $args
+    ];
+  endif;
+  return $results;
+}
+
+function OscString(
+  string $buffer,
+  &$offset
+):string{
+  $nullPos = strpos($buffer, "\0", $offset);
+  if($nullPos === false):
+    return '';
+  endif;
+  $len = $nullPos - $offset;
+  $str = substr($buffer, $offset, $len);
+  $offset += (floor($len / 4) + 1) * 4;
+  return $str;
+}
