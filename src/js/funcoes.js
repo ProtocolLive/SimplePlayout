@@ -51,6 +51,21 @@ osc.onmessage = function (event) {
   && tr.nextElementSibling.classList.contains('Played') === false) {
     Play(tr.nextElementSibling)
   }
+  //Tempo até a live
+  tr = document.getElementById('Playlist').querySelectorAll('tr.Played')
+  tr = tr[tr.length - 1]
+  tempo = new Date('1970-1-1')
+  while (tr !== null) {
+    if(tr.cells[VIDEO].children[0].textContent === 'ENTRADA NDI'){
+      break
+    }
+    temp = tr.cells[TEMPOS].children[TemposRestante].textContent.split(':').map(Number)
+    tempo.setHours(tempo.getHours() + temp[0])
+    tempo.setMinutes(tempo.getMinutes() + temp[1])
+    tempo.setSeconds(tempo.getSeconds() + temp[2])
+    tr = tr.nextElementSibling
+    document.getElementById('LiveEm').textContent = tempo.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})
+  }
 }
 
 setInterval(function(){
