@@ -23,17 +23,17 @@ endif;
 if($_GET['action'] === 'play'
 or $_GET['action'] === 'loadplay'):
   if($_GET['video'] === 'CANAL 1'):
-    $data = 'PLAY ' . $_GET['canal'] . '-10 route://1' . "\r\n";
+    $data = 'PLAY ' . $_GET['canal'] . '-10 route://1';
   else:
-    $data = 'PLAY ' . $_GET['canal'] . '-10' . "\r\n";
+    $data = 'PLAY ' . $_GET['canal'] . '-10';
   endif;
   SendData($data);
 endif;
 
 if($_GET['logo'] == 'true'):
-  $data .= 'PLAY ' . $_GET['canal'] . '-20 "LOGO" MIX 30' . "\r\n";
+  $data = 'PLAY ' . $_GET['canal'] . '-20 "LOGO" MIX 30' . "\r\n";
 else:
-  $data .= 'STOP ' . $_GET['canal'] . '-20' . "\r\n";
+  $data = 'STOP ' . $_GET['canal'] . '-20' . "\r\n";
 endif;
 if($_GET['live'] == 'true'):
   $data .= 'PLAY ' . $_GET['canal'] . '-21 "AO VIVO" MIX 30';
