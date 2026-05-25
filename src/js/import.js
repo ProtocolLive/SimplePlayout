@@ -25,11 +25,20 @@ function Import(){
   file = new FileReader
   file.onload = function(e){
     data = JSON.parse(e.target.result)
+    let error = ''
     data.forEach(function(video){
       const id = video[1].replaceAll(' ', '')
-      document.getElementById('video-' + id).ondblclick()
-      document.getElementById(id).cells[HORA].innerHTML = video[0].replaceAll(' ', '<br>')
+      const tr = document.getElementById('video-' + id)
+      if(tr === null){
+        error += video[1]
+      }else{
+        tr.ondblclick()
+        document.getElementById(id).cells[HORA].innerHTML = video[0].replaceAll(' ', '<br>')
+      }
     })
+    if(error !== ''){
+      alert('Videos não encontrados:\n' + error)
+    }
   }
   obj = document.createElement('input')
   obj.type = 'file'
