@@ -7,8 +7,14 @@ function Export(){
   videos2 = []
   videos.forEach(function(video){
     videos2.push([
-      video.cells[HORA].innerHTML.replaceAll('<br>', ' '),
-      video.cells[VIDEO].children[0].textContent
+      video.cells[HORA].innerHTML,
+      video.cells[VIDEO].children[0].textContent,
+      video.cells[OPCOES].children[OpcoesTransicao].value,
+      video.cells[OPCOES].children[OpcoesTempo].value,
+      video.cells[OPCOES].children[OpcoesTween].value,
+      video.cells[OPCOES].children[OpcoesDirecao].value,
+      video.cells[OPCOES].children[OpcoesLogo].checked,
+      video.cells[OPCOES].children[OpcoesLive].checked
     ])
   })
   dados = new Blob([JSON.stringify(videos2)], {type: 'application/json'})
@@ -33,7 +39,13 @@ function Import(){
         error += video[1]
       }else{
         tr.ondblclick()
-        document.getElementById(id).cells[HORA].innerHTML = video[0].replaceAll(' ', '<br>')
+        const tr2 = document.getElementById('Playlist').lastElementChild
+        tr2.cells[OPCOES].children[OpcoesTransicao].value = video[2] ?? 'CUT'
+        tr2.cells[OPCOES].children[OpcoesTempo].value = video[3] ?? 0
+        tr2.cells[OPCOES].children[OpcoesTween].value = video[4] ?? 'LINEAR'
+        tr2.cells[OPCOES].children[OpcoesDirecao].value = video[5] ?? 'RIGHT'
+        tr2.cells[OPCOES].children[OpcoesLogo].checked = video[6] ?? false
+        tr2.cells[OPCOES].children[OpcoesLive].checked = video[7] ?? false
       }
     })
     if(error !== ''){
