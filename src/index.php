@@ -23,8 +23,6 @@
           <input type="number" id="canal" value="1" style="width:30px" title="Canal">
           <input type="checkbox" onclick="Ajax('play.php?action=gc&status='+this.checked,'AjaxBlank')"> GC &nbsp;
           <input type="checkbox" onclick="Ajax('rtmp.php?status='+this.checked,'AjaxBlank')"> RTMP &nbsp;
-          <progress id="Volume1" min="0" max="1499999999"></progress>
-          <progress id="Volume2" min="0" max="1499999999"></progress>
         </div>
         <div style="margin:5px 0 5px 0">
           <a href="#" onclick="Limpar()" title="Limpar seleção">🧹</a>
