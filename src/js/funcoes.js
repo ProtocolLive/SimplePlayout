@@ -150,6 +150,7 @@ function CreateLine(Objeto, EmCima) {
   td = document.createElement('td')
   td.classList = Css
   select = document.createElement('select')
+  select.setAttribute('onclick', 'event.stopPropagation()')
   temp = document.createElement('option')
   temp.value = 'CUT'
   temp.textContent = 'Corte'
@@ -172,12 +173,14 @@ function CreateLine(Objeto, EmCima) {
   select.appendChild(temp)
   td.appendChild(select)
   temp = document.createElement('input')
+  temp.setAttribute('onclick', 'event.stopPropagation()')
   temp.type = 'number'
   temp.value = 0
   temp.style.width = '30px'
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))
   select = document.createElement('select')
+  select.setAttribute('onclick', 'event.stopPropagation()')
   temp = document.createElement('option')
   temp.value = 'LINEAR'
   temp.textContent = 'Linear'
@@ -348,6 +351,7 @@ function CreateLine(Objeto, EmCima) {
   select.appendChild(temp)
   td.appendChild(select)
   select = document.createElement('select')
+  select.setAttribute('onclick', 'event.stopPropagation()')
   temp = document.createElement('option')
   temp.value = 'RIGHT'
   temp.textContent = 'Direita'
