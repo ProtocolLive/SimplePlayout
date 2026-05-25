@@ -16,22 +16,25 @@ const OpcoesLive = 8
 
 let Dragged = null
 let TempoNdi = []
+let LastVideo = null
 
 Ajax('cls.php', 'Videos')
 Ajax('ConfigServer.php', 'AjaxBlank')
 
 osc.onmessage = function (event) {
   event = JSON.parse(event.data)
-  //VU
-  document.getElementById('Volume1').value = event[2]
-  document.getElementById('Volume2').value = event[3]
   //tempo reproduzido
-  decorrido = new Date('1970-1-1')
-  tr = document.getElementById(event[0].replaceAll(' ', ''))
+  if(event[0] === ''){
+    tr = LastVideo
+  }else{
+    tr = document.getElementById(event[0].replaceAll(' ', ''))
+    LastVideo = tr
+  }
   if (tr === null
   || tr.classList.contains('Played') === false) {
     return
   }
+  decorrido = new Date('1970-1-1')
   decorrido.setSeconds(Math.floor(event[1]))
   restante = new Date('1970-1-1 ' + tr.cells[TEMPOS].children[TemposTotal].textContent)
   restante = new Date(restante - decorrido)
