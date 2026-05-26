@@ -1,3 +1,7 @@
+//Protocol Corporation Ltda.
+//https://github.com/ProtocolLive/SimplePlayout
+//Version 2026.05.26.00
+
 const HORA = 0
 const VIDEO = 1
 const TEMPOS = 2

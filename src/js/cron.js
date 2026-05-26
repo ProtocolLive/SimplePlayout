@@ -1,3 +1,7 @@
+//Protocol Corporation Ltda.
+//https://github.com/ProtocolLive/SimplePlayout
+//Version 2026.05.26.00
+
 function CronDone(td){
   data = td.querySelector('input[type="datetime-local"]')
   td.innerHTML = DateFormat(new Date(data.value.replaceAll('T', ' '))).replaceAll(' ', '<br>')
