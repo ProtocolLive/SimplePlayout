@@ -66,7 +66,7 @@ osc.onmessage = function (event) {
     tempo.setMinutes(tempo.getMinutes() + temp[1])
     tempo.setSeconds(tempo.getSeconds() + temp[2])
     tr = tr.nextElementSibling
-    document.getElementById('LiveEm').textContent = tempo.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', second: '2-digit'})
+    document.getElementById('LiveEm').textContent = DateFormat(tempo, false, true)
   }
 }
 
@@ -446,10 +446,7 @@ function Play(tr) {
     TempoNdi[1] = new Date('1970-1-1')
     TempoNdi[2] = setInterval(function(){
       TempoNdi[1].setSeconds(TempoNdi[1].getSeconds() + 1)
-      TempoNdi[0].cells[TEMPOS].children[TemposTotal].textContent = TempoNdi[1].toLocaleTimeString(
-        [],
-        {hour: '2-digit', minute: '2-digit', second: '2-digit'}
-      )
+      TempoNdi[0].cells[TEMPOS].children[TemposTotal].textContent = DateFormat(TempoNdi[1], false, true)
     }, 1000)
   }else{
     RecalcularTudo(tr)

@@ -3,13 +3,19 @@
  * @param {boolean} Br
  * @returns Formato DD/MM/YYYY HH:MM:SS
  */
-function DateFormat(Data, Br){
-  return Data.getDate().toString().padStart(2, '0') + '/' +
-    (Data.getMonth() + 1).toString().padStart(2, '0') + '/' +
-    Data.getFullYear() + (Br ? '<br>' : ' ') +
-    Data.getHours().toString().padStart(2, '0') + ':' +
-    Data.getMinutes().toString().padStart(2, '0') + ':' +
-    Data.getSeconds().toString().padStart(2, '0')
+function DateFormat(Data, Br, OnlyTime){
+  if(OnlyTime){
+    return Data.getHours().toString().padStart(2, '0') + ':' +
+      Data.getMinutes().toString().padStart(2, '0') + ':' +
+      Data.getSeconds().toString().padStart(2, '0')
+  }else{
+    return Data.getDate().toString().padStart(2, '0') + '/' +
+      (Data.getMonth() + 1).toString().padStart(2, '0') + '/' +
+      Data.getFullYear() + (Br ? '<br>' : ' ') +
+      Data.getHours().toString().padStart(2, '0') + ':' +
+      Data.getMinutes().toString().padStart(2, '0') + ':' +
+      Data.getSeconds().toString().padStart(2, '0')
+  }
 }
 
 /**
