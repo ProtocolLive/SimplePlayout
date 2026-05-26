@@ -1,5 +1,7 @@
 <?php
-//Versão 2026.05.25.01
+//Protocol Corporation Ltda.
+//https://github.com/ProtocolLive/Ajax
+//Versão 2026.05.26.00
 
 ini_set('max_execution_time', '0');
 
@@ -13,21 +15,15 @@ $temp = socket_bind($sock, gethostbyname(gethostname()), 6250);
 while(true):
   socket_recvfrom($sock, $buffer, 4096, 0, $from, $portFrom);
   $mensagens = ParseOsc($buffer);
-  echo "event: message\n";
-  echo 'data: [';
   $index = array_search('/channel/1/stage/layer/10/foreground/file/name', array_column($mensagens, 'address'));
-  if($index === false):
-    echo '""';
-  else:
-    echo '"' . $mensagens[$index]['args'][0] . '"';
-  endif;
+  $video = $index === false ? null : $mensagens[$index]['args'][0];
   $index = array_search('/channel/1/stage/layer/10/foreground/file/time', array_column($mensagens, 'address'));
-  if($index === false):
-    echo ',0';
-  else:
-    echo ',' . $mensagens[$index]['args'][0];
+  $tempo = $index === false ? null : $mensagens[$index]['args'][0];
+
+  if($video !== null and $tempo !== null):
+    echo "event: message\n";
+    echo 'data: ["' . $video . '",' . $tempo . ']' . "\n\n";
   endif;
-  echo ']' . "\n\n";
 endwhile;
 
 function ParseOsc(
