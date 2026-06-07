@@ -118,8 +118,9 @@ function CreateLine(Objeto, EmCima) {
   td.appendChild(temp)
   td.appendChild(document.createElement('br'))
   temp = document.createElement('span')
-  temp.innerHTML = '<a href"#" onclick="event.stopPropagation();Play(this.closest(\'tr\'))" class="Pointer">▶️</a>' +
-    '<a href"#" onclick="event.stopPropagation();Remover(this.closest(\'tr\'));SomaTempoPlaylist(this.closest(\'tr\'))" class="Pointer">❎</a>'
+  temp.innerHTML = '<a href"#" onclick="event.stopPropagation();Preload(this.closest(\'tr\'))" class="Pointer" title="Pré carregar">⏳</a>' +
+    '<a href"#" onclick="event.stopPropagation();Play(this.closest(\'tr\'))" class="Pointer" title="Play">▶️</a>' +
+    '<a href"#" onclick="event.stopPropagation();Remover(this.closest(\'tr\'));SomaTempoPlaylist(this.closest(\'tr\'))" class="Pointer" title="Remover">❎</a>'
   td.appendChild(temp)
   tr.appendChild(td)
 
